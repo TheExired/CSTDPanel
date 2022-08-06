@@ -1,0 +1,1401 @@
+local PanelType = "Beta" --Alpha or beta
+
+local plr = game.Players.LocalPlayer
+local PlrGui = plr.PlayerGui
+local PlrData = plr:FindFirstChild("PlayerData")
+
+
+game["Run Service"].RenderStepped:Connect(function()
+	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Colors.Visible = true
+	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Info.Visible = true
+	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Secrets.Visible = true
+	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.SecretsLOCKED.Visible = false
+	
+
+	local NewSelection = game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value].Levels["0"].Settings
+	local LevelHidden = Instance.new("NumberValue")
+	LevelHidden = 0
+	local SearchingForHidden = true
+	local HiddenText = ""
+	local c = game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value].Levels:GetChildren()
+	for i = 1, #c do
+		if c[i].Settings.CanHidden.Value == true then
+			if SearchingForHidden == true then
+				SearchingForHidden = false
+				LevelHidden = tonumber(c[i].Name) or 0
+				if LevelHidden ~= 0 then
+					HiddenText = " | " .. "<font color=\"rgb(0, 0, 0)\">".."SeeHidden: Lvl."..LevelHidden.."</font>"
+				else
+					HiddenText = ""
+					end
+			end
+		end
+		
+		
+	end
+	local PlaceLimit = 0
+	local PlaceLimitText = ""
+	if game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value]:FindFirstChild("PlaceLimit") then
+		PlaceLimit = game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value]:FindFirstChild("PlaceLimit").Value or 0
+		if PlaceLimit ~= 0 then
+			PlaceLimitText = " | " .. "<font color=\"rgb(232, 0, 0)\"><br />Limit: "..PlaceLimit.."</font>"
+		else
+			PlaceLimitText = ""
+		end
+	end
+
+	game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.Stats.TextLabel.Text = "<font color=\"rgb(255, 85, 0)\">".."Damage: "..NewSelection.Damage.Value.."</font>" .. " | " .. "<font color=\"rgb(15, 159, 255)\">".."Range: "..NewSelection.Range.Value.."</font>" .. "<font color=\"rgb(255, 170, 0)\"><br />".."AttackRate: "..NewSelection.ReloadTime.Value.."s</font>" .. HiddenText .. PlaceLimitText
+
+end)
+
+local OldCFrame = game.Players.LocalPlayer.Character.PrimaryPart.CFrame
+
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(workspace.Map.TeleporterIsland.Main.TheHideout.Interactables.Keycard1.Handle.CFrame)
+task.wait()
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(OldCFrame)
+
+
+if PlrGui:FindFirstChild("CTDPlusMenu") then
+	PlrGui:FindFirstChild("CTDPlusMenu"):Destroy()
+end
+
+local Menu = Instance.new("ScreenGui")
+Menu.Name = "CTDPlusMenu"
+Menu.Parent = PlrGui
+
+local function Gradient(item)
+	local UIGradient = Instance.new("UIGradient")
+	UIGradient.Parent = item
+	UIGradient.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(.625,.625,.625))
+	UIGradient.Rotation = 90
+end
+
+local function AddSoundsToButton(p, t1, t2)
+	if t1 == 1 then
+	local HoverSound = Instance.new("Sound")
+	HoverSound.Parent = p
+	HoverSound.Name = "HoverSound"
+	HoverSound.SoundId = "rbxassetid://4989299416"
+		HoverSound.Volume = 0.6
+		p.MouseEnter:Connect(function()
+			HoverSound:Play()
+		end)
+	end
+	if t2 == 1 then
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Parent = p
+	ClickSound.Name = "ClickSound"
+	ClickSound.SoundId = "rbxassetid://421058925"
+	ClickSound.Volume = 2
+	
+	
+	
+	p.MouseButton1Down:Connect(function()
+		ClickSound:Play()
+		end)
+		end
+end
+
+
+
+local function ButtonEffects(p)
+	local u3 = false;
+	local u1 = p.Background.ImageColor3;
+	local u2 = p.BackgroundDark.ImageColor3;
+
+	p.MouseEnter:Connect(function()
+		if u3 == false then
+			u3 = true;
+			p.Background.ImageColor3 = Color3.new(u1.R + 0.1568627450980392, u1.G + 0.1568627450980392, u1.B + 0.1568627450980392);
+			p.BackgroundDark.ImageColor3 = Color3.new(u2.R + 0.10980392156862745, u2.G + 0.10980392156862745, u2.B + 0.10980392156862745);
+			game:GetService("TweenService"):Create(p.Background, TweenInfo.new(0.75), {
+				ImageColor3 = u1
+			}):Play();
+			game:GetService("TweenService"):Create(p.BackgroundDark, TweenInfo.new(0.75), {
+				ImageColor3 = u2
+			}):Play();
+			--script.Parent.Power.TextTransparency = 0;
+			--script.Parent.Power.TextStrokeTransparency = 0.8;
+			
+		end
+	end)
+	
+
+end
+
+
+local function CreateButton()
+	local AdminTab = Instance.new("ImageButton")
+	AdminTab.Parent = Menu
+	AdminTab.Name = "AdminPanelButton"
+	AdminTab.Position = UDim2.new(0.01, 0,0.125, 0)
+	AdminTab.Size = UDim2.new(0.1,0,0.1,0)
+	AdminTab.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	AdminTab.ImageColor3 = Color3.fromRGB(59, 148, 106)
+	AdminTab.Image = "rbxassetid://3570695787"
+	AdminTab.ScaleType = Enum.ScaleType.Slice
+	AdminTab.SliceCenter = Rect.new(100,100,100,100)
+	AdminTab.SliceScale = 0.06
+	AdminTab.BackgroundTransparency = 1
+
+	local AdminTabImage = Instance.new("ImageLabel")
+	AdminTabImage.Parent = AdminTab
+	AdminTabImage.Image = "http://www.roblox.com/asset/?id=282366832"
+	AdminTabImage.ImageColor3 = Color3.fromRGB(0,0,0)
+	AdminTabImage.ImageTransparency = 0.5
+	AdminTabImage.BackgroundTransparency = 1
+	AdminTabImage.Size = UDim2.new(1,0,1,0)
+	AdminTabImage.ScaleType = Enum.ScaleType.Fit
+
+	local Frame = Instance.new("ImageLabel")
+	Frame.Parent = AdminTab
+	Frame.Image = "rbxassetid://3570695787"
+	Frame.Size = UDim2.new(1,0,1,0)
+	Frame.Position = UDim2.new(0,0,0.075,0)
+	Frame.BackgroundTransparency = 1
+	Frame.ImageColor3 = Color3.fromRGB(19, 108, 66)
+	Frame.ScaleType = Enum.ScaleType.Slice
+	Frame.SliceCenter = Rect.new(100,100,100,100)
+	Frame.SliceScale = 0.06
+	Frame.ZIndex = 0
+
+	local TextLabel = Instance.new("TextLabel")
+	TextLabel.Parent = AdminTab
+	TextLabel.BackgroundTransparency = 1
+	TextLabel.Size = UDim2.new(1,0,0.3,0)
+	TextLabel.Position = UDim2.new(0,1,0.7,0)
+	TextLabel.ZIndex = 2
+	TextLabel.TextColor3 = Color3.fromRGB(255,255,255)
+	TextLabel.Text = "Admin Panel"
+	TextLabel.TextScaled = true
+	TextLabel.TextStrokeTransparency = 0.75
+	TextLabel.Font = Enum.Font.SourceSansBold
+end
+
+CreateButton()
+
+
+--Creating The Frame
+
+local function AdminPanelMain()
+	local Frame1 = Instance.new("ImageLabel")
+	Frame1.Name = "AdminPanelFrame"
+	Frame1.Parent = Menu
+	Frame1.Image = "rbxassetid://3570695787"
+	Frame1.ImageColor3 = Color3.fromRGB(58, 58, 56)
+	Frame1.BackgroundTransparency = 1
+	Frame1.SliceScale = 0.12
+	Frame1.ScaleType = Enum.ScaleType.Slice
+	Frame1.SliceCenter = Rect.new(100, 100, 100, 100)
+	Frame1.Position = UDim2.new(0.5,0,0.125,0)
+	Frame1.Size = UDim2.new(0.65,0,0.65,0)
+	Frame1.AnchorPoint = Vector2.new(0.5,0)
+	Frame1.Visible = false
+	
+	local Buttons = Instance.new("ImageLabel")
+	Buttons.Name = "Buttons"
+	Buttons.Parent = Frame1
+	Buttons.Image = "rbxassetid://3570695787"
+	Buttons.ImageColor3 = Color3.fromRGB(44, 44, 44)
+	Buttons.BackgroundTransparency = 1
+	Buttons.SliceScale = 0.12
+	Buttons.ScaleType = Enum.ScaleType.Slice
+	Buttons.SliceCenter = Rect.new(100, 100, 100, 100)
+	Buttons.Position = UDim2.new(0.5,0,0.1425,0)
+	Buttons.Size = UDim2.new(0.9,0,0.11,0)
+	Buttons.AnchorPoint = Vector2.new(0.5,0)
+	
+	local function CreateButtonsButton(Name,Parent,CapsName,Position,Col1,Col2,Col3)
+		local TowersButton = Instance.new("TextButton")
+		TowersButton.Parent = Parent
+		TowersButton.Name = Name
+		TowersButton.Font = Enum.Font.SourceSansBold
+		TowersButton.BackgroundTransparency = 1
+		TowersButton.TextColor3 = Color3.fromRGB(255,255,255)
+		TowersButton.TextScaled = true
+		TowersButton.Position = Position or UDim2.new(0,0,0,0)
+		TowersButton.Size = UDim2.new(0.235,0,0.925,0)
+		TowersButton.ZIndex = 4
+		TowersButton.Text = ""
+		
+		
+		local TextConstraint = Instance.new("UITextSizeConstraint")
+		TextConstraint.Parent = TowersButton
+		TextConstraint.MaxTextSize = 25
+		TextConstraint.MinTextSize = 1
+
+		local TowersText = Instance.new("TextLabel")
+		TowersText.Parent = TowersButton
+		TowersText.ZIndex = 6
+		TowersText.TextColor3 = Color3.fromRGB(255,255,255)
+		TowersText.Text = CapsName
+		TowersText.TextScaled = true
+		TowersText.BackgroundTransparency = 1
+		TowersText.Position = UDim2.new(0,0,0.5,0)
+		TowersText.AnchorPoint = Vector2.new(0,0.5)
+		TowersText.Size = UDim2.new(1,0,0.7,0)
+		TowersText.Font = Enum.Font.SourceSansBold
+		
+		local bg = Instance.new("ImageLabel")
+		bg.Name = "Background"
+		bg.Parent = TowersButton
+		bg.Image = "rbxassetid://3570695787"
+		bg.ImageColor3 = Col1 or Color3.fromRGB(221, 30, 24)
+		bg.BackgroundTransparency = 1
+		bg.SliceScale = 0.12
+		bg.ScaleType = Enum.ScaleType.Slice
+		bg.SliceCenter = Rect.new(100, 100, 100, 100)
+		bg.Position = UDim2.new(0.5,0,0.5,0)
+		bg.Size = UDim2.new(1,0,1,0)
+		bg.AnchorPoint = Vector2.new(0.5,0.5)
+		bg.ZIndex = 3
+		
+		local bg1 = Instance.new("ImageLabel")
+		bg1.Name = "BackgroundDark"
+		bg1.Parent = TowersButton
+		bg1.Image = "rbxassetid://3570695787"
+		bg1.ImageColor3 = Col2 or Color3.fromRGB(131, 40, 39)
+		bg1.BackgroundTransparency = 1
+		bg1.SliceScale = 0.12
+		bg1.ScaleType = Enum.ScaleType.Slice
+		bg1.SliceCenter = Rect.new(100, 100, 100, 100)
+		bg1.Position = UDim2.new(0.5,0,0.6,0)
+		bg1.Size = UDim2.new(1,0,1,0)
+		bg1.AnchorPoint = Vector2.new(0.5,0.5)
+		bg1.ZIndex = 2
+		
+		local bg2 = Instance.new("ImageLabel")
+		bg2.Name = "Icon"
+		bg2.Parent = bg
+		bg2.Image = "http://www.roblox.com/asset/?id=6521954462"
+		bg2.ImageColor3 = Col3 or Color3.fromRGB(129, 0, 0)
+		bg2.BackgroundTransparency = 1
+		bg2.ScaleType = Enum.ScaleType.Crop
+		bg2.Position = UDim2.new(0,0,-0.05,0)
+		bg2.Size = UDim2.new(0.9,0,1.2,0)
+		bg2.SliceScale = 1
+		bg2.ZIndex = 3
+	end
+	
+	CreateButtonsButton("Towers",Buttons,"TOWERS",UDim2.new(0,0,0,0),Color3.fromRGB(221, 30, 24),Color3.fromRGB(131, 40, 39),Color3.fromRGB(129, 0, 0))
+	
+	
+	
+	local UIGradient4 = Instance.new("UIGradient")
+	UIGradient4.Parent = Frame1
+	UIGradient4.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
+	UIGradient4.Rotation = 90
+	
+	
+	local AspectRatio = Instance.new("UIAspectRatioConstraint")
+	AspectRatio.AspectRatio = 1.38
+	AspectRatio.AspectType = Enum.AspectType.FitWithinMaxSize
+	AspectRatio.DominantAxis = Enum.DominantAxis.Width
+	AspectRatio.Parent = Frame1
+
+	local AdminPanelText = Instance.new("TextLabel")
+	AdminPanelText.Parent = Frame1
+	AdminPanelText.Name = "AdminPanelText"
+	AdminPanelText.Text = "ADMIN PANEL"
+	AdminPanelText.BackgroundTransparency = 1
+	AdminPanelText.TextColor3 = Color3.fromRGB(255,255,255)
+	AdminPanelText.TextScaled = true
+	AdminPanelText.Font = Enum.Font.SourceSansBold
+	AdminPanelText.Size = UDim2.new(0.7,0,0.125,0)
+	AdminPanelText.Position = UDim2.new(0.15,0,0,0)
+
+	local XButton = Instance.new("TextButton")
+	XButton.Name = "XBUTTON"
+	XButton.BackgroundTransparency = 1
+	XButton.Font = Enum.Font.SourceSansBold
+	XButton.Size = UDim2.new(0.115,0,0.11,0)
+	XButton.Position = UDim2.new(0.99,0,0.01)
+	XButton.AnchorPoint = Vector2.new(1,0)
+	XButton.TextScaled = true
+	XButton.Text = "X"
+	XButton.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	XButton.TextColor3 = Color3.fromRGB(255,255,255)
+	XButton.ZIndex = 2
+	XButton.Parent = Frame1
+	
+	local UIGradient3 = Instance.new("UIGradient")
+	UIGradient3.Parent = XButton
+	UIGradient3.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
+	UIGradient3.Rotation = 90
+
+	local BG = Instance.new("ImageLabel")
+	BG.Parent = XButton
+	BG.Position = UDim2.new(0.5,0,0.5,0)
+	BG.Size = UDim2.new(1,0,1,0)
+	BG.BackgroundTransparency = 1
+	BG.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	BG.Image = "rbxassetid://3570695787"
+	BG.ImageColor3 = Color3.fromRGB(158, 158, 158)
+	BG.SliceScale = 0.06
+	BG.ScaleType = Enum.ScaleType.Slice
+	BG.SliceCenter = Rect.new(100, 100, 100, 100)
+	BG.AnchorPoint = Vector2.new(0.5,0.5)
+
+	XButton.MouseButton1Down:Connect(function()
+		Frame1.Visible = false
+	end)
+
+	local SideColors = Instance.new("ImageLabel")
+	SideColors.Parent = Frame1
+	SideColors.Image = "rbxassetid://3570695787"
+	SideColors.ImageColor3 = Color3.fromRGB(255,255,255)
+	SideColors.ScaleType = Enum.ScaleType.Slice
+	SideColors.SliceScale = 0.12
+	SideColors.SliceCenter = Rect.new(100,100,100,100)
+	SideColors.Position = UDim2.new(0.013,0,0.275,0)
+	SideColors.Size = UDim2.new(0.974,0,0.695,0)
+	SideColors.Name = "SideColors"
+	SideColors.BackgroundTransparency = 1
+
+	local SideColors2 = Instance.new("ImageLabel")
+	SideColors2.Parent = Frame1
+	SideColors2.Image = "rbxassetid://3570695787"
+	SideColors2.ImageColor3 = Color3.fromRGB(58, 58, 56)
+	SideColors2.ScaleType = Enum.ScaleType.Slice
+	SideColors2.SliceScale = 0.12
+	SideColors2.SliceCenter = Rect.new(100,100,100,100)
+	SideColors2.Position = UDim2.new(0.025,0,0.275,0)
+	SideColors2.Size = UDim2.new(0.950,0,0.70,0)
+	SideColors2.Name = "Background"
+	SideColors2.BackgroundTransparency = 1
+
+	local CurrencyFrame = Instance.new("Frame")
+	CurrencyFrame.BackgroundTransparency = 0.6
+	CurrencyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	CurrencyFrame.Position = UDim2.new(0.01,0,0.01,0)
+	CurrencyFrame.Size = UDim2.new(0.2,0,0.11,0)
+	CurrencyFrame.Parent = Frame1
+
+	local UICorner = Instance.new("UICorner")
+	UICorner.Parent = CurrencyFrame
+	UICorner.CornerRadius = UDim.new(0,6)
+
+	Gradient(AdminPanelText)
+
+
+	local Frame2 = Instance.new("ImageLabel")
+	Frame2.Name = "Bottom"
+	Frame2.Parent = Frame1
+	Frame2.Image = "rbxassetid://3570695787"
+	Frame2.ImageColor3 = Color3.fromRGB(44, 44, 41)
+	Frame2.BackgroundTransparency = 1
+	Frame2.SliceScale = 0.12
+	Frame2.ScaleType = Enum.ScaleType.Slice
+	Frame2.SliceCenter = Rect.new(100, 100, 100, 100)
+	Frame2.Position = UDim2.new(0,0,0.02,0)
+	Frame2.Size = UDim2.new(1,0,1,0)
+	Frame2.ZIndex = 0
+	
+
+	
+	if PanelType == "Beta" then
+		local MainFrame = Instance.new("ImageLabel")
+		MainFrame.Name = "Mainframe"
+		MainFrame.Parent = Frame1
+		MainFrame.Image = "rbxassetid://3570695787"
+		MainFrame.ImageColor3 = Color3.fromRGB(0, 0, 0)
+		MainFrame.BackgroundTransparency = 1
+		MainFrame.SliceScale = 0.12
+		MainFrame.ScaleType = Enum.ScaleType.Slice
+		MainFrame.SliceCenter = Rect.new(100, 100, 100, 100)
+		MainFrame.Position = UDim2.new(0.05,0,0.273,0)
+		MainFrame.Size = UDim2.new(0.9,0,0.7,0)
+		MainFrame.ImageTransparency = 0.65
+		MainFrame.ZIndex = 1
+		
+		local TowersFrame = Instance.new("Frame")
+		TowersFrame.Parent = MainFrame
+		TowersFrame.Size = UDim2.new(1,0,1,0)
+		TowersFrame.Position = UDim2.new(0,0,0,0)
+		TowersFrame.BackgroundTransparency = 1
+		TowersFrame.Name = "TowersFrame"
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		local function InfoFrame()
+		local InfoFrame = Instance.new("Frame")
+			InfoFrame.Parent = TowersFrame
+			InfoFrame.Name = "InfoFrame"
+		InfoFrame.Size = UDim2.new(0.4,0,1,0)
+		InfoFrame.Position = UDim2.new(0,0,0,0)
+		InfoFrame.BackgroundTransparency = 1
+		
+		local Background = Instance.new("ImageLabel")
+		Background.Name = "Background"
+		Background.Parent = InfoFrame
+		Background.Image = "rbxassetid://3570695787"
+		Background.ImageColor3 = Color3.fromRGB(50, 50, 50)
+		Background.BackgroundTransparency = 1
+		Background.SliceScale = 0.12
+		Background.ScaleType = Enum.ScaleType.Slice
+		Background.SliceCenter = Rect.new(100, 100, 100, 100)
+		Background.Position = UDim2.new(0.51,0,0.5,0)
+		Background.Size = UDim2.new(0.95,0,0.95,0)
+		Background.ZIndex = 3
+		Background.AnchorPoint = Vector2.new(0.5,0.5)
+		
+			local ViewPort = game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Mainframe.TowersFrame.InfoFrame.Background.ViewportFrame:Clone()
+			ViewPort.Parent = Background
+			
+			
+			
+		
+		local Background2 = Instance.new("ImageLabel")
+		Background2.Name = "Background"
+		Background2.Parent = ViewPort
+		Background2.Image = "rbxassetid://3570695787"
+		Background2.ImageColor3 = Color3.fromRGB(57, 57, 57)
+		Background2.BackgroundTransparency = 1
+		Background2.SliceScale = 0.12
+		Background2.ScaleType = Enum.ScaleType.Slice
+		Background2.SliceCenter = Rect.new(100, 100, 100, 100)
+		Background2.Position = UDim2.new(0.5,0,0.475,0)
+		Background2.Size = UDim2.new(1,0,1,0)
+		Background2.ZIndex = 4
+			Background2.AnchorPoint = Vector2.new(0.5,0.5)
+			
+
+			
+			local Equip = Instance.new("TextButton")
+			Equip.Name = "Equip"
+			Equip.BackgroundTransparency = 1
+			Equip.TextColor3 = Color3.fromRGB(255,255,255)
+			Equip.Text = "EQUIP"
+			Equip.Font = Enum.Font.SourceSansBold
+			Equip.TextScaled = true
+			Equip.Position = UDim2.new(0,0,0.809,0)
+			Equip.Size = UDim2.new(0.475,0,0.175,0)
+			Equip.ZIndex = 7
+			Equip.Parent = Background
+			
+			local Unequip = Instance.new("TextButton")
+			Unequip.Name = "Unequip"
+			Unequip.BackgroundTransparency = 1
+			Unequip.TextColor3 = Color3.fromRGB(255,255,255)
+			Unequip.Text = "UNEQUIP"
+			Unequip.Font = Enum.Font.SourceSansBold
+			Unequip.TextScaled = true
+			Unequip.Position = UDim2.new(0,0,0.809,0)
+			Unequip.Size = UDim2.new(0.475,0,0.175,0)
+			Unequip.ZIndex = 7
+			Unequip.Parent = Background
+			Unequip.Visible = false
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			local StatOptions = Instance.new("Frame")
+			StatOptions.Name = "StatOptions"
+			StatOptions.Parent = Background
+			StatOptions.BackgroundTransparency = 1
+			StatOptions.Position = UDim2.new(0,0,0.735,0)
+			StatOptions.Size = UDim2.new(1,0,0.06,0)
+			StatOptions.ZIndex = 6
+			
+			local Circles = Instance.new("Frame")
+			Circles.Parent = StatOptions
+			Circles.Name = "Circles"
+			Circles.Position = UDim2.new(0,0,-0.05,0)
+			Circles.Size = UDim2.new(1,0,1,0)
+			Circles.ZIndex = 6
+			Circles.BackgroundTransparency = 1
+			
+			local LightCircle = Instance.new("ObjectValue")
+			LightCircle.Parent = StatOptions
+			LightCircle.Name = "LightCircle"
+			LightCircle.Value = LightCircle
+			
+			local UIGridLayoutNew = Instance.new("UIGridLayout")
+			UIGridLayoutNew.Parent = Circles
+			UIGridLayoutNew.CellPadding = UDim2.new(0,5,0,5)
+			UIGridLayoutNew.CellSize = UDim2.new(0.25,0,1,0)
+			UIGridLayoutNew.StartCorner = Enum.StartCorner.TopLeft
+			UIGridLayoutNew.FillDirection = Enum.FillDirection.Horizontal
+			UIGridLayoutNew.HorizontalAlignment = Enum.HorizontalAlignment.Center
+			UIGridLayoutNew.VerticalAlignment = Enum.VerticalAlignment.Top
+			
+			local One = Instance.new("TextButton")
+			One.Name = "1"
+			One.Parent = Circles
+			One.Position = UDim2.new(0,0,0,0)
+			One.Size = UDim2.new(0,200,0,50)
+			One.Font = Enum.Font.SourceSansBold
+			One.Text = "DESC"
+			One.TextColor3 = Color3.fromRGB(176, 176, 176)
+			One.BackgroundColor3 = Color3.fromRGB(98, 98, 98)
+			One.BorderSizePixel = 0
+			One.ZIndex = 6
+			One.TextScaled = true
+			One.AutoButtonColor = false
+			
+			local function Corner(p)
+				local Corner = Instance.new("UICorner")
+				Corner.Parent = p
+				Corner.CornerRadius = UDim.new(0,4)
+			end
+			Corner(One)
+			
+			local Two = Instance.new("TextButton")
+			Two.Name = "2"
+			Two.Parent = Circles
+			Two.Position = UDim2.new(0,0,0,0)
+			Two.Size = UDim2.new(0,200,0,50)
+			Two.Font = Enum.Font.SourceSansBold
+			Two.Text = "STATS"
+			Two.TextColor3 = Color3.fromRGB(176, 176, 176)
+			Two.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+			Two.BorderSizePixel = 0
+			Two.ZIndex = 6
+			Two.TextScaled = true
+			Two.AutoButtonColor = false
+			
+			Corner(Two)
+			--[[
+			
+			local Three = Instance.new("TextButton")
+			Three.Name = "3"
+			Three.Parent = Circles
+			Three.Position = UDim2.new(0,0,0,0)
+			Three.Size = UDim2.new(0,200,0,50)
+			Three.Font = Enum.Font.SourceSansBold
+			Three.Text = "COLORS"
+			Three.TextColor3 = Color3.fromRGB(176, 176, 176)
+			Three.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+			Three.BorderSizePixel = 0
+			Three.ZIndex = 6
+			Three.TextScaled = true
+			Three.AutoButtonColor = false
+
+			Corner(Three)
+			]]
+	
+			
+			
+			
+			--Stats
+			
+			local StatsFrame = Instance.new("Frame")
+			StatsFrame.Parent = Background
+			StatsFrame.Name = "Stats"
+			StatsFrame.Position = UDim2.new(0,0,0.525,0)
+			StatsFrame.Size = UDim2.new(1,0,0.2,0)
+			StatsFrame.BackgroundTransparency = 1
+			StatsFrame.ZIndex = 4
+			StatsFrame.ClipsDescendants = true
+			
+			local Desc = Instance.new("TextLabel")
+			Desc.TextColor3 = Color3.fromRGB(236, 236, 236)
+			Desc.Text = ""
+			Desc.Name = "Desc"
+			Desc.BackgroundTransparency = 1
+			Desc.Size = UDim2.new(1,0,1,0)
+			Desc.Position = UDim2.new(0,0,0,0)
+			Desc.TextScaled = true
+			Desc.Font = Enum.Font.SourceSansBold
+			Desc.Parent = StatsFrame
+			Desc.ZIndex = 4
+			
+			
+			
+			--<font color=rgb(255, 170, 0)>AttackRate: 1.2s</font>
+			
+			
+			local TextLabel = Instance.new("TextLabel")
+			TextLabel.TextColor3 = Color3.fromRGB(77, 77, 77)
+			TextLabel.Text = "Test"
+			TextLabel.Name = "TextLabel"
+			TextLabel.BackgroundTransparency = 1
+			TextLabel.Size = UDim2.new(1,0,1,0)
+			TextLabel.Position = UDim2.new(1,0,0,0)
+			TextLabel.TextScaled = true
+			TextLabel.Font = Enum.Font.SourceSansBold
+			TextLabel.Parent = StatsFrame
+			TextLabel.ZIndex = 4
+			TextLabel.RichText = true
+			--TextLabel.Text = "Use a <b>bold title</b>"
+			--"Use a <b>bold title</b>"
+			
+			
+
+			--<br />
+			
+		
+			
+			
+			
+			
+			--[[
+			
+			local Colors = Instance.new("Frame")
+
+			Colors.BackgroundTransparency = 1
+			Colors.Size = UDim2.new(1,0,1,0)
+			Colors.Position = UDim2.new(2,0,0,0)
+
+
+			Colors.Parent = StatsFrame
+			Colors.ZIndex = 4
+			
+			local Colors2 = Instance.new("TextBox")
+			Colors2.TextColor3 = Color3.fromRGB(248, 248, 248)
+			Colors2.Text = "68,68,68"
+			Colors2.Name = "Colors1"
+			Colors2.BackgroundTransparency = 1
+			Colors2.Size = UDim2.new(1,0,0.33,0)
+			Colors2.Position = UDim2.new(2,0,0,0)
+			Colors2.TextScaled = true
+			Colors2.Font = Enum.Font.SourceSansBold
+			Colors2.Parent = Colors
+			Colors2.ZIndex = 4
+			Colors2.ClearTextOnFocus = false
+			
+			local Colors3 = Instance.new("TextBox")
+			Colors3.TextColor3 = Color3.fromRGB(248, 248, 248)
+			Colors3.Text = "68,68,68"
+			Colors3.Name = "Colors2"
+			Colors3.BackgroundTransparency = 1
+			Colors3.Size = UDim2.new(1,0,0.33,0)
+			Colors3.Position = UDim2.new(2,0,0.33,0)
+			Colors3.TextScaled = true
+			Colors3.Font = Enum.Font.SourceSansBold
+			Colors3.Parent = Colors
+			Colors3.ZIndex = 4
+			Colors3.ClearTextOnFocus = false
+			
+			local Colors4 = Instance.new("TextBox")
+			Colors4.TextColor3 = Color3.fromRGB(248, 248, 248)
+			Colors4.Text = "68,68,68"
+			Colors4.Name = "Colors3"
+			Colors4.BackgroundTransparency = 1
+			Colors4.Size = UDim2.new(1,0,0.33,0)
+			Colors4.Position = UDim2.new(2,0,0.66,0)
+			Colors4.TextScaled = true
+			Colors4.Font = Enum.Font.SourceSansBold
+			Colors4.Parent = Colors
+			Colors4.ZIndex = 4
+			Colors4.ClearTextOnFocus = false
+			
+			Colors2.FocusLost:Connect(function()
+				game.ReplicatedStorage.Remotes.PlayerData:FireServer(
+					"Color",
+					"PrimaryColor",
+					{Color = Color3.new(Colors2.Text/255,Colors2.Text/255,Colors2.Text/255)}
+				)
+			end)
+]]
+			
+			Two.MouseEnter:Connect(function()
+
+				One.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+				--Three.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+				Two.BackgroundColor3 = Color3.fromRGB(98, 98, 98)
+				
+				game:GetService("TweenService"):Create(Desc, TweenInfo.new(0.3), {
+					Position = UDim2.new(-1,0,0,0)
+				}):Play();
+
+				game:GetService("TweenService"):Create(TextLabel, TweenInfo.new(0.3), {
+					Position = UDim2.new(0,0,0,0)
+				}):Play();
+				
+				--game:GetService("TweenService"):Create(Colors, TweenInfo.new(0.3), {
+				--	Position = UDim2.new(1,0,0,0)
+				--}):Play();
+					
+			end)
+
+			One.MouseEnter:Connect(function()
+
+				Two.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+				--Three.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+				One.BackgroundColor3 = Color3.fromRGB(98, 98, 98)
+				
+				game:GetService("TweenService"):Create(Desc, TweenInfo.new(0.3), {
+					Position = UDim2.new(0,0,0,0)
+				}):Play();
+
+				game:GetService("TweenService"):Create(TextLabel, TweenInfo.new(0.3), {
+					Position = UDim2.new(1,0,0,0)
+				}):Play();
+				
+				--game:GetService("TweenService"):Create(Colors, TweenInfo.new(0.3), {
+				--	Position = UDim2.new(2,0,0,0)
+				--}):Play();
+
+				
+
+			end)
+			--[[
+			Three.MouseEnter:Connect(function()
+
+				Two.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+				Three.BackgroundColor3 = Color3.fromRGB(98, 98, 98)
+				One.BackgroundColor3 = Color3.fromRGB(68,68,68)
+
+				game:GetService("TweenService"):Create(Desc, TweenInfo.new(0.3), {
+					Position = UDim2.new(-2,0,0,0)
+				}):Play();
+
+				game:GetService("TweenService"):Create(TextLabel, TweenInfo.new(0.3), {
+					Position = UDim2.new(-1,0,0,0)
+				}):Play();
+				
+				
+				game:GetService("TweenService"):Create(Colors, TweenInfo.new(0.3), {
+					Position = UDim2.new(0,0,0,0)
+				}):Play();
+
+
+			end)
+			
+
+			]]--
+			
+			
+			local SelectedTower = Instance.new("StringValue")
+			SelectedTower.Name = "Selected Tower"
+			SelectedTower.Parent = Background
+			
+			Equip.MouseButton1Down:Connect(function()
+				
+				if PlrData.Loadout.Tower1.Value == "None" then
+					game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(1), SelectedTower.Value)
+					local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+					local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+					SlotCheck.Value = 1
+					EquipChecker.Value = true
+					Unequip.Visible = true
+					Equip.Visible = false
+					Unequip.Active = true
+					Equip.Active = false
+				else
+					if PlrData.Loadout.Tower2.Value == "None" then
+						game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(2), SelectedTower.Value)
+						local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+						local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+						SlotCheck.Value = 2
+						EquipChecker.Value = true
+						Unequip.Visible = true
+						Equip.Visible = false
+						Unequip.Active = true
+						Equip.Active = false
+					else
+						if PlrData.Loadout.Tower3.Value == "None" then
+							game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(3), SelectedTower.Value)
+							local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+							local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+							SlotCheck.Value = 3
+							EquipChecker.Value = true
+							Unequip.Visible = true
+							Equip.Visible = false
+							Unequip.Active = true
+							Equip.Active = false
+						else
+							if PlrData.Loadout.Tower4.Value == "None" then
+								game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(4), SelectedTower.Value)
+								local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+								local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+								SlotCheck.Value = 4
+								EquipChecker.Value = true
+								Unequip.Visible = true
+								Equip.Visible = false
+								Unequip.Active = true
+								Equip.Active = false
+							else
+								if PlrData.Loadout.Tower5.Value == "None" then
+									game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(5), SelectedTower.Value)
+									local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+									local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+									SlotCheck.Value = 5
+									EquipChecker.Value = true
+									Unequip.Visible = true
+									Equip.Visible = false
+									Unequip.Active = true
+									Equip.Active = false
+								else
+									if SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower5.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower4.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower3.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower2.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower1.Value then
+									local oldtower = game.Players.LocalPlayer.PlayerData.Loadout.Tower5
+										local UnequipOld = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(oldtower.Value).Equipped
+										local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+										SlotCheck.Value = 5
+									UnequipOld.Value = false
+									game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(5), SelectedTower.Value)
+									local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+									
+									EquipChecker.Value = true
+									Unequip.Visible = true
+									Equip.Visible = false
+									Unequip.Active = true
+										Equip.Active = false
+										end
+								end
+							end
+						end
+					end
+				end
+			end)
+			
+			
+			
+			
+			SelectedTower.Changed:Connect(function()
+				Desc.Text = game.ReplicatedStorage.Units[SelectedTower.Value].Description.Value
+				
+			end)
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			Unequip.MouseButton1Down:Connect(function()
+				
+				if PlrData.Loadout.Tower1.Value == SelectedTower.Value then
+					local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+					EquipChecker.Value = false
+					game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 1})
+					game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 1})
+					
+					local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+					SlotCheck.Value = ""
+					Unequip.Visible = false
+					Equip.Visible = true
+					Unequip.Active = false
+					Equip.Active = true
+				else
+					if PlrData.Loadout.Tower2.Value == SelectedTower.Value then
+						game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 2})
+						game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 2})
+						local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+						local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+						SlotCheck.Value = ""
+						EquipChecker.Value = false
+						Unequip.Visible = false
+						Equip.Visible = true
+						Unequip.Active = false
+						Equip.Active = true
+					else
+						if PlrData.Loadout.Tower3.Value == SelectedTower.Value then
+							game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 3})
+							game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 3})
+							local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+							local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+							SlotCheck.Value = ""
+							EquipChecker.Value = false
+							Unequip.Visible = false
+							Equip.Visible = true
+							Unequip.Active = false
+							Equip.Active = true
+						else
+							if PlrData.Loadout.Tower4.Value == SelectedTower.Value then
+								game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 4})
+								game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 4})
+								local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+								local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+								SlotCheck.Value = ""
+								EquipChecker.Value = false
+								Unequip.Visible = false
+								Equip.Visible = true
+								Unequip.Active = false
+								Equip.Active = true
+							else
+								if PlrData.Loadout.Tower5.Value == SelectedTower.Value then
+									game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 5})
+									game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 5})
+									local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+									local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
+									SlotCheck.Value = ""
+									EquipChecker.Value = false
+									Unequip.Visible = false
+									Equip.Visible = true
+									Unequip.Active = false
+									Equip.Active = true
+								end
+							end
+						end
+					end
+				end
+			end)
+			
+			
+			
+			
+			AddSoundsToButton(Equip,0,1)
+			AddSoundsToButton(Unequip,0,1)
+			
+			
+			
+			
+			
+			
+			
+			local UIText = Instance.new("UITextSizeConstraint")
+			UIText.Parent = Equip
+			UIText.MaxTextSize = 30
+			UIText.MinTextSize = 1
+			
+			local tb = Instance.new("ImageLabel")
+			tb.Name = "TextButton_Roundify_12px"
+			tb.Parent = Equip
+			tb.Image = "rbxassetid://3570695787"
+			tb.ImageColor3 = Color3.fromRGB(0, 191, 0)
+			tb.BackgroundTransparency = 1
+			tb.SliceScale = 0.12
+			tb.ScaleType = Enum.ScaleType.Slice
+			tb.SliceCenter = Rect.new(100, 100, 100, 100)
+			tb.Position = UDim2.new(0.5,0,0.5,0)
+			tb.Size = UDim2.new(1,0,1,0)
+			tb.ZIndex = 6
+			tb.AnchorPoint = Vector2.new(0.5,0.5)
+			
+			
+			local tb1 = Instance.new("ImageLabel")
+			tb1.Name = "BackgroundDark"
+			tb1.Parent = Equip
+			tb1.Image = "rbxassetid://3570695787"
+			tb1.ImageColor3 = Color3.fromRGB(0, 103, 0)
+			tb1.BackgroundTransparency = 1
+			tb1.SliceScale = 0.12
+			tb1.ScaleType = Enum.ScaleType.Slice
+			tb1.SliceCenter = Rect.new(100, 100, 100, 100)
+			tb1.Position = UDim2.new(0.5,0,0.6,0)
+			tb1.Size = UDim2.new(1,0,1,0)
+			tb1.ZIndex = 4
+			tb1.AnchorPoint = Vector2.new(0.5,0.5)
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			local UIText1 = Instance.new("UITextSizeConstraint")
+			UIText1.Parent = Unequip
+			UIText1.MaxTextSize = 30
+			UIText1.MinTextSize = 1
+
+			local tb3 = Instance.new("ImageLabel")
+			tb3.Name = "TextButton_Roundify_12px"
+			tb3.Parent = Unequip
+			tb3.Image = "rbxassetid://3570695787"
+			tb3.ImageColor3 = Color3.fromRGB(131, 131, 131)
+			tb3.BackgroundTransparency = 1
+			tb3.SliceScale = 0.12
+			tb3.ScaleType = Enum.ScaleType.Slice
+			tb3.SliceCenter = Rect.new(100, 100, 100, 100)
+			tb3.Position = UDim2.new(0.5,0,0.5,0)
+			tb3.Size = UDim2.new(1,0,1,0)
+			tb3.ZIndex = 6
+			tb3.AnchorPoint = Vector2.new(0.5,0.5)
+
+
+			local tb4 = Instance.new("ImageLabel")
+			tb4.Name = "BackgroundDark"
+			tb4.Parent = Unequip
+			tb4.Image = "rbxassetid://3570695787"
+			tb4.ImageColor3 = Color3.fromRGB(80, 80, 80)
+			tb4.BackgroundTransparency = 1
+			tb4.SliceScale = 0.12
+			tb4.ScaleType = Enum.ScaleType.Slice
+			tb4.SliceCenter = Rect.new(100, 100, 100, 100)
+			tb4.Position = UDim2.new(0.5,0,0.6,0)
+			tb4.Size = UDim2.new(1,0,1,0)
+			tb4.ZIndex = 4
+			tb4.AnchorPoint = Vector2.new(0.5,0.5)
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			local UIGradient1 = Instance.new("UIGradient")
+			UIGradient1.Parent = tb
+			UIGradient1.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
+			UIGradient1.Rotation = 90
+			
+			
+			
+			
+			local UIGradient2 = Instance.new("UIGradient")
+			UIGradient2.Parent = tb3
+			UIGradient2.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
+			UIGradient2.Rotation = 90
+			
+			local NameText = Instance.new("TextLabel")
+			NameText.Name = "NameText"
+			NameText.TextScaled = true
+			NameText.BackgroundTransparency = 1
+			NameText.Font = Enum.Font.SourceSansBold
+			NameText.TextColor3 = Color3.fromRGB(240,240,240)
+			NameText.Position = UDim2.new(0,0,-0.0125,0)
+			NameText.Size = UDim2.new(1,0,0.12,0)
+			NameText.ZIndex = 10
+			NameText.Text = "Test"
+			NameText.Parent = Background
+			
+			local Type = Instance.new("TextLabel")
+			Type.Name = "Type"
+			Type.TextScaled = true
+			Type.BackgroundTransparency = 1
+			Type.Font = Enum.Font.SourceSansBold
+			Type.TextColor3 = Color3.fromRGB(170, 170, 170)
+			Type.TextStrokeTransparency = 0.75
+			Type.Position = UDim2.new(0,0,0.09,0)
+			Type.Size = UDim2.new(1,0,0.075,0)
+			Type.ZIndex = 10
+			Type.Text = "Ground"
+			Type.Parent = Background
+			
+			SelectedTower.Changed:Connect(function()
+				NameText.Text = tostring(SelectedTower.Value)
+				if game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Ground") then
+						Type.Text = "Ground"
+						
+				elseif game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Cliff") then
+					Type.Text = "Cliff"
+				elseif game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Path") then
+					Type.Text = "Path"
+				elseif game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Hybrid") then
+					Type.Text = "Ground & Cliff"
+					end
+			end)
+			
+		end
+		InfoFrame()
+		local function ListFrame()
+			local ListFrame1 = Instance.new("Frame")
+			ListFrame1.Parent = TowersFrame
+			ListFrame1.Name = "ListFrame"
+			ListFrame1.Size = UDim2.new(0.6,0,1,0)
+			ListFrame1.Position = UDim2.new(0.4,0,0,0)
+			ListFrame1.BackgroundTransparency = 1
+			
+			local ScrollFrame = Instance.new("ScrollingFrame")
+			ScrollFrame.Parent = ListFrame1
+			ScrollFrame.Position = UDim2.new(0,0,0,0)
+			ScrollFrame.Size = UDim2.new(1,0,1,0)
+			ScrollFrame.BackgroundTransparency = 1
+			ScrollFrame.Name = "ScrollFrame"
+			ScrollFrame.CanvasSize = UDim2.new(0,0,3,0)
+			ScrollFrame.CanvasPosition = Vector2.new(0,9)
+			
+			local UIGrid = Instance.new("UIGridLayout")
+			UIGrid.Parent = ScrollFrame
+			UIGrid.CellPadding = UDim2.new(0,3,0.005,0)
+			UIGrid.CellSize = UDim2.new(0,100,0,100)
+			UIGrid.HorizontalAlignment = Enum.HorizontalAlignment.Left
+			UIGrid.FillDirection = Enum.FillDirection.Horizontal
+			
+			local UIPadding = Instance.new("UIPadding")
+			UIPadding.Parent = ScrollFrame
+			UIPadding.PaddingLeft = UDim.new(0.04,0)
+			UIPadding.PaddingTop = UDim.new(0.006,0)
+		end
+	
+		ListFrame()
+		local function AddTower(TowerName)
+			if game.ReplicatedStorage.Units:FindFirstChild(TowerName) then
+				local ScrollFrame = TowersFrame:FindFirstChild("ListFrame"):FindFirstChild("ScrollFrame")
+				local Button = Instance.new("TextButton")
+				Button.Name = TowerName
+				Button.BackgroundTransparency = 1
+				Button.Text = ""
+				Button.Size = UDim2.new(0,200,0,50)
+				Button.Position = UDim2.new(0,0,0,0)
+				Button.Parent = ScrollFrame
+				
+				local Bg1 = Instance.new("ImageLabel")
+				Bg1.Name = "Background"
+				Bg1.Parent = Button
+				Bg1.Image = "rbxassetid://3570695787"
+				Bg1.ImageColor3 = Color3.fromRGB(90, 90, 90)
+				Bg1.BackgroundTransparency = 1
+				Bg1.SliceScale = 0.06
+				Bg1.ScaleType = Enum.ScaleType.Slice
+				Bg1.SliceCenter = Rect.new(100, 100, 100, 100)
+				Bg1.Position = UDim2.new(0,0,0,0)
+				Bg1.Size = UDim2.new(1,0,0.95,0)
+				Bg1.ZIndex = 2
+				
+				local Bg2 = Instance.new("ImageLabel")
+				Bg2.Name = "BackgroundDark"
+				Bg2.Parent = Button
+				Bg2.Image = "rbxassetid://3570695787"
+				Bg2.ImageColor3 = Color3.fromRGB(67, 67, 67)
+				Bg2.BackgroundTransparency = 1
+				Bg2.SliceScale = 0.06
+				Bg2.ScaleType = Enum.ScaleType.Slice
+				Bg2.SliceCenter = Rect.new(100, 100, 100, 100)
+				Bg2.Position = UDim2.new(0,0,0,0)
+				Bg2.Size = UDim2.new(1,0,1,0)
+				Bg2.ZIndex = 1
+				
+				local TextLabel = Instance.new("TextLabel")
+				TextLabel.Parent = Button
+				TextLabel.Text = TowerName
+				TextLabel.Position = UDim2.new(0.025,0,0.7,0)
+				TextLabel.Size = UDim2.new(0.95,0,0.25,0)
+				TextLabel.BackgroundTransparency = 1
+				TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+				TextLabel.Font = Enum.Font.SourceSansBold
+				TextLabel.ZIndex = 5
+				TextLabel.TextScaled = true
+				
+				local Bg3 = Instance.new("ImageLabel")
+				Bg3.Name = "TextLabel_Roundify_5px"
+				Bg3.Parent = TextLabel
+				Bg3.Image = "rbxassetid://3570695787"
+				Bg3.ImageColor3 = Color3.fromRGB(0, 0, 0)
+				Bg3.BackgroundTransparency = 1
+				Bg3.SliceScale = 0.05
+				Bg3.ScaleType = Enum.ScaleType.Slice
+				Bg3.SliceCenter = Rect.new(100, 100, 100, 100)
+				Bg3.Position = UDim2.new(0.5,0,0.525,0)
+				Bg3.Size = UDim2.new(1,0,0.95,0)
+				Bg3.ZIndex = 3
+				Bg3.ImageTransparency = 0.5
+				Bg3.AnchorPoint = Vector2.new(0.5,0.5)
+				
+				local Equipped = Instance.new("BoolValue")
+				Equipped.Name = "Equipped"
+				Equipped.Parent = Button
+				Equipped.Value = false
+				
+				local Slot = Instance.new("NumberValue")
+				Slot.Name = "Slot"
+				Slot.Parent = Button
+				Slot.Value = nil
+				
+				local Level = Instance.new("NumberValue")
+				Level.Name = "Level"
+				Level.Parent = Button
+				Level.Value = 0
+				
+				local EquippedSlot = Instance.new("TextLabel")
+				EquippedSlot.TextColor3 = Color3.fromRGB(0, 255, 0)
+				EquippedSlot.TextStrokeTransparency = 0.75
+				EquippedSlot.ZIndex = 5
+				EquippedSlot.TextYAlignment = Enum.TextYAlignment.Top
+				EquippedSlot.TextXAlignment = Enum.TextXAlignment.Left
+				EquippedSlot.TextScaled = true
+				EquippedSlot.Font = Enum.Font.SourceSansBold
+				EquippedSlot.AnchorPoint = Vector2.new(0, 0.05)
+				EquippedSlot.BackgroundTransparency = 1
+				EquippedSlot.Size = UDim2.new(0.9,0,0.4,0)
+				EquippedSlot.Position = UDim2.new(0.075,0,0,0)
+				EquippedSlot.Text = ""
+				EquippedSlot.Parent = Button
+				
+				
+				local TowerView = game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Mainframe.TowersFrame.ListFrame.ScrollFrame:FindFirstChild(TowerName).Icon:Clone()
+				TowerView.Parent = Button
+				AddSoundsToButton(Button,1,1)
+				ButtonEffects(Button)
+				
+				Button.MouseButton1Down:Connect(function()
+					local Background = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background
+					local SelectedTower = Background["Selected Tower"]
+					SelectedTower.Value = TowerName
+					local Unequip = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.Unequip
+					local Equip = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.Equip
+					if Equipped.Value == false then
+						Unequip.Visible = false
+						Equip.Visible = true
+						Unequip.Active = false
+						Equip.Active = true
+						--CreateModel(script.Selected.Value, script.Selected.Value.Levels["0"].Object[script.Selected.Value.Name], l__Background__13.ViewportFrame.WorldModel, true);
+						for v95, v96 in pairs(Background.ViewportFrame.WorldModel:GetChildren()) do
+							v96:Destroy();
+						end
+						--local Selected = game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Mainframe.TowersFrame.TowersMain.Selected
+						--Selected.Value = TowerName
+						
+						
+						local v12 = require(game.ReplicatedStorage.Modules.CTDModule);
+						local function CreateModel(p5, p6, p7, p8)
+							spawn(function()
+								v12.viewportobject(p5, p6, p7, p8, {
+									ColorInfo = {
+										DefaultOnly = true
+									}
+								});
+							end);
+						end;
+
+						local NewSelected = game.ReplicatedStorage.Units[SelectedTower.Value]
+
+						CreateModel(NewSelected, NewSelected.Levels[Level.Value].Object[SelectedTower.Value], Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.ViewportFrame.WorldModel, true);
+
+					elseif Equipped.Value == true then
+						Unequip.Visible = true
+						Equip.Visible = false
+						Unequip.Active = true
+						Equip.Active = false
+						
+						
+						
+						
+						
+
+						
+					end
+				end)
+				
+				Equipped.Changed:Connect(function()
+					if Equipped.Value == true then
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+					else
+						Bg1.ImageColor3 = Color3.fromRGB(90, 90, 90)
+						Bg2.ImageColor3 = Color3.fromRGB(67, 67, 67)
+					end
+				end)
+				
+				Slot.Changed:Connect(function()
+					if Slot.Value == 0 then
+						EquippedSlot.Text = ""
+						else
+						EquippedSlot.Text = Slot.Value
+						end
+				end)
+				
+			end
+			
+			
+			
+			
+		end
+		local c = game.ReplicatedStorage.Units:GetChildren()
+		for i = 1, #c do
+			AddTower(c[i].Name)
+		end
+		
+	end
+end
+AdminPanelMain()
+
+local LockedTowersList = {"Rat","Mage","Painter"}
+local Children = Menu.AdminPanelFrame.Mainframe.TowersFrame.ListFrame.ScrollFrame:GetChildren()
+for i = 1, #Children do
+	if table.find(LockedTowersList,Children[i].Name) then
+		Children[i].Background.ImageColor3 = Color3.fromRGB(70, 70, 70)
+		Children[i].BackgroundDark.ImageColor3 = Color3.fromRGB(67, 67, 67)
+		Children[i].TextLabel.Text = "???"
+		--Children[i].Icon.ImageColor3 = Color3.new(0,0,0)
+	end
+end
+
+
+
+
+Menu.ResetOnSpawn = false
+local AdminButton = Menu:FindFirstChild("AdminPanelButton")
+local debounce = false
+AdminButton.MouseButton1Down:Connect(function()
+	if debounce == false then
+		Menu.AdminPanelFrame.Visible = true
+		debounce = true
+	elseif debounce == true then
+		Menu.AdminPanelFrame.Visible = false
+		debounce = false
+	end
+end)
+
