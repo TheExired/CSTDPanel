@@ -251,10 +251,10 @@ local function AdminPanelMain()
 		bg.ZIndex = 3
 		bg.ClipsDescendants = true
 		
-		local UIGradient4 = Instance.new("UIGradient")
-		UIGradient4.Parent = bg
-		UIGradient4.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
-		UIGradient4.Rotation = 90
+		local UIGradient9 = Instance.new("UIGradient")
+		UIGradient9.Parent = bg
+		UIGradient9.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.760784, 0.760784, 0.760784))
+		UIGradient9.Rotation = 90
 		
 		
 		local bg1 = Instance.new("ImageLabel")
@@ -285,8 +285,28 @@ local function AdminPanelMain()
 	end
 	
 	CreateButtonsButton("Towers",Buttons,"TOWERS",UDim2.new(0,0,0,0),Color3.fromRGB(221, 30, 24),Color3.fromRGB(131, 40, 39),Color3.fromRGB(129, 0, 0))
+	CreateButtonsButton("Perks",Buttons,"PERKS",UDim2.new(0.255,0,0,0),Color3.fromRGB(255, 167, 15),Color3.fromRGB(154, 101, 9),Color3.fromRGB(111, 70, 5))
+	CreateButtonsButton("Cosmetics",Buttons,"COSMETICS",UDim2.new(0.51,0,0,0),Color3.fromRGB(0, 170, 255),Color3.fromRGB(0, 105, 150),Color3.fromRGB(0, 95, 143))
+	CreateButtonsButton("Crates",Buttons,"CRATES",UDim2.new(1,0,0,0),Color3.fromRGB(170, 85, 255),Color3.fromRGB(110, 54, 166),Color3.fromRGB(83, 40, 125))
 	
+	Buttons.Crates.AnchorPoint = Vector2.new(1,0)
+	Buttons.Crates.Background.Icon.Image = "http://www.roblox.com/asset/?id=6522014622"
+	Buttons.Crates.Background.Icon.Size = UDim2.new(0.5,0,1.2,0)
+	Buttons.Crates.Background.Icon.Position = UDim2.new(0.25,0,-0.1,0)
 	
+	Buttons.Cosmetics.Background.Icon.Image = "http://www.roblox.com/asset/?id=6521979594"
+	Buttons.Cosmetics.Background.Icon.Size = UDim2.new(0.6,0,1.25,0)
+	Buttons.Cosmetics.Background.Icon.Position = UDim2.new(0.250,0,0)
+	
+	Buttons.Perks.Background.Icon.Image = "http://www.roblox.com/asset/?id=7653655795"
+	Buttons.Perks.Background.Icon.Size = UDim2.new(0.5, 0,1.2, 0)
+	Buttons.Perks.Background.Icon.Position = UDim2.new(0.025, 0,-0.1, 0)
+	Buttons.Perks.Background.Icon.ImageTransparency = 0.2
+	local newic = Buttons.Perks.Background.Icon:Clone()
+	newic.Image = "http://www.roblox.com/asset/?id=5977354207"
+	newic.Size = UDim2.new(0.6,0,1.2,0)
+	newic.Position = UDim2.new(0.475,0,-0.1,0)
+	newic.Parent = Buttons.Perks.Background
 	
 	local UIGradient4 = Instance.new("UIGradient")
 	UIGradient4.Parent = Frame1
@@ -381,6 +401,72 @@ local function AdminPanelMain()
 	local UICorner = Instance.new("UICorner")
 	UICorner.Parent = CurrencyFrame
 	UICorner.CornerRadius = UDim.new(0,6)
+	
+	local Token = Instance.new("Frame")
+	Token.Parent = CurrencyFrame
+	Token.BackgroundTransparency = 1
+	Token.Position = UDim2.new(0.025,0,0.05,0)
+	Token.Size = UDim2.new(1,0,0.5,0)
+	
+	local TokenImg = Instance.new("ImageLabel")
+	TokenImg.Parent = Token
+	TokenImg.Image = "http://www.roblox.com/asset/?id=7759237760"
+	TokenImg.Size = UDim2.new(1,0,1,0)
+	TokenImg.BackgroundTransparency = 1
+	TokenImg.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	
+	local TokenText = Instance.new("TextLabel")
+	TokenText.Parent = Token
+	TokenText.Position = UDim2.new(0.25,0,0,0)
+	TokenText.Size = UDim2.new(0.8,0,1,0)
+	TokenText.BackgroundTransparency = 1
+	TokenText.Font = Enum.Font.SourceSansBold
+	TokenText.Text = "Loading..."
+	TokenText.Text = game.Players.LocalPlayer.PlayerData.Stats.Tokens.Value
+	TokenText.TextColor3 = Color3.fromRGB(206, 206, 206)
+	TokenText.TextScaled = true
+	TokenText.TextStrokeTransparency = 0.75
+	TokenText.AnchorPoint = Vector2.new(0,0.05)
+	TokenText.TextXAlignment = Enum.TextXAlignment.Left
+	
+	local TokenText2 = Instance.new("TextLabel")
+	TokenText2.Parent = TokenText
+	TokenText2.Position = UDim2.new(0,0,0,0)
+	TokenText2.Size = UDim2.new(1,0,1,0)
+	TokenText2.BackgroundTransparency = 1
+	TokenText2.Name = "TokenText"
+	TokenText2.Font = Enum.Font.SourceSansBold
+	TokenText2.Text = "Tokens"
+	TokenText2.TextColor3 = Color3.fromRGB(217, 217, 217)
+	TokenText2.TextScaled = true
+	TokenText2.TextStrokeTransparency = 0.75
+	TokenText2.AnchorPoint = Vector2.new(0,0.05)
+	TokenText2.Visible = false
+	TokenText2.TextXAlignment = Enum.TextXAlignment.Left
+	
+	game.Players.LocalPlayer.PlayerData.Stats.Tokens.Changed:Connect(function()
+		TokenText.Text = game.Players.LocalPlayer.PlayerData.Stats.Tokens.Value
+	end)
+	
+	local u1 = false
+	TokenText.MouseEnter:Connect(function()
+		if u1 == false then
+			u1 = true;
+			TokenText.TextStrokeTransparency = 1;
+			TokenText.TextTransparency = 1;
+			TokenText.TokenText.Visible = true;
+		end;
+	end)
+	
+	TokenText.MouseLeave:Connect(function()
+		if u1 == true then
+			u1 = false;
+			TokenText.TextStrokeTransparency = 0.75;
+			TokenText.TextTransparency = 0;
+			TokenText.TokenText.Visible = false;
+		end;
+	end)
+	
 
 	Gradient(AdminPanelText)
 
@@ -1396,14 +1482,53 @@ end
 Menu.ResetOnSpawn = false
 local AdminButton = Menu:FindFirstChild("AdminPanelButton")
 local debounce = false
+local oldpos = Menu.AdminPanelFrame.Position
+
 AdminButton.MouseButton1Down:Connect(function()
 	if debounce == false then
 		Menu.AdminPanelFrame.Visible = true
 		debounce = true
+		game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Visible = false
+		game.Players.LocalPlayer.PlayerGui.Menu.ShopFrame.Visible = false
+		game.Players.LocalPlayer.PlayerGui.Menu.BountiesFrame.Visible = false
+		game.Players.LocalPlayer.PlayerGui.Menu.OtherFrame.Visible = false
+		
+		
+		Menu.AdminPanelFrame.Position = oldpos + UDim2.new(0, 0, 0.05, 0);
+		game:GetService("TweenService"):Create(Menu.AdminPanelFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+			Position = Menu.AdminPanelFrame.Position - UDim2.new(0, 0, 0.05, 0)
+		}):Play();
+		
 	elseif debounce == true then
 		Menu.AdminPanelFrame.Visible = false
 		debounce = false
 	end
 end)
 
+game.Players.LocalPlayer.PlayerGui.Menu.EquipmentButton.MouseButton1Down:Connect(function()
+	
+	debounce = false
+	task.wait(0.05)
+	Menu.AdminPanelFrame.Visible = false
+end)
 
+game.Players.LocalPlayer.PlayerGui.Menu.BountiesButton.MouseButton1Down:Connect(function()
+	
+	debounce = false
+	task.wait(0.05)
+	Menu.AdminPanelFrame.Visible = false
+end)
+
+game.Players.LocalPlayer.PlayerGui.Menu.OtherButton.MouseButton1Down:Connect(function()
+	
+	debounce = false
+	task.wait(0.05)
+	Menu.AdminPanelFrame.Visible = false
+end)
+
+game.Players.LocalPlayer.PlayerGui.Menu.ShopButton.MouseButton1Down:Connect(function()
+	
+	debounce = false
+	task.wait(0.05)
+	Menu.AdminPanelFrame.Visible = false
+end)
