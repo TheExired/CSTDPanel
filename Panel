@@ -249,6 +249,13 @@ local function AdminPanelMain()
 		bg.Size = UDim2.new(1,0,1,0)
 		bg.AnchorPoint = Vector2.new(0.5,0.5)
 		bg.ZIndex = 3
+		bg.ClipsDescendants = true
+		
+		local UIGradient4 = Instance.new("UIGradient")
+		UIGradient4.Parent = bg
+		UIGradient4.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
+		UIGradient4.Rotation = 90
+		
 		
 		local bg1 = Instance.new("ImageLabel")
 		bg1.Name = "BackgroundDark"
@@ -1398,4 +1405,5 @@ AdminButton.MouseButton1Down:Connect(function()
 		debounce = false
 	end
 end)
+
 
