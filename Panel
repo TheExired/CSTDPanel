@@ -10,7 +10,7 @@ game["Run Service"].RenderStepped:Connect(function()
 	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Info.Visible = true
 	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Secrets.Visible = true
 	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.SecretsLOCKED.Visible = false
-	
+
 
 	local NewSelection = game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value].Levels["0"].Settings
 	local LevelHidden = Instance.new("NumberValue")
@@ -27,11 +27,11 @@ game["Run Service"].RenderStepped:Connect(function()
 					HiddenText = " | " .. "<font color=\"rgb(0, 0, 0)\">".."SeeHidden: Lvl."..LevelHidden.."</font>"
 				else
 					HiddenText = ""
-					end
+				end
 			end
 		end
-		
-		
+
+
 	end
 	local PlaceLimit = 0
 	local PlaceLimitText = ""
@@ -72,28 +72,28 @@ end
 
 local function AddSoundsToButton(p, t1, t2)
 	if t1 == 1 then
-	local HoverSound = Instance.new("Sound")
-	HoverSound.Parent = p
-	HoverSound.Name = "HoverSound"
-	HoverSound.SoundId = "rbxassetid://4989299416"
+		local HoverSound = Instance.new("Sound")
+		HoverSound.Parent = p
+		HoverSound.Name = "HoverSound"
+		HoverSound.SoundId = "rbxassetid://4989299416"
 		HoverSound.Volume = 0.6
 		p.MouseEnter:Connect(function()
 			HoverSound:Play()
 		end)
 	end
 	if t2 == 1 then
-	local ClickSound = Instance.new("Sound")
-	ClickSound.Parent = p
-	ClickSound.Name = "ClickSound"
-	ClickSound.SoundId = "rbxassetid://421058925"
-	ClickSound.Volume = 2
-	
-	
-	
-	p.MouseButton1Down:Connect(function()
-		ClickSound:Play()
+		local ClickSound = Instance.new("Sound")
+		ClickSound.Parent = p
+		ClickSound.Name = "ClickSound"
+		ClickSound.SoundId = "rbxassetid://421058925"
+		ClickSound.Volume = 2
+
+
+
+		p.MouseButton1Down:Connect(function()
+			ClickSound:Play()
 		end)
-		end
+	end
 end
 
 
@@ -116,10 +116,10 @@ local function ButtonEffects(p)
 			}):Play();
 			--script.Parent.Power.TextTransparency = 0;
 			--script.Parent.Power.TextStrokeTransparency = 0.8;
-			
+
 		end
 	end)
-	
+
 
 end
 
@@ -191,7 +191,7 @@ local function AdminPanelMain()
 	Frame1.Size = UDim2.new(0.65,0,0.65,0)
 	Frame1.AnchorPoint = Vector2.new(0.5,0)
 	Frame1.Visible = false
-	
+
 	local Buttons = Instance.new("ImageLabel")
 	Buttons.Name = "Buttons"
 	Buttons.Parent = Frame1
@@ -205,6 +205,8 @@ local function AdminPanelMain()
 	Buttons.Size = UDim2.new(0.9,0,0.11,0)
 	Buttons.AnchorPoint = Vector2.new(0.5,0)
 	
+
+
 	local function CreateButtonsButton(Name,Parent,CapsName,Position,Col1,Col2,Col3)
 		local TowersButton = Instance.new("TextButton")
 		TowersButton.Parent = Parent
@@ -217,8 +219,8 @@ local function AdminPanelMain()
 		TowersButton.Size = UDim2.new(0.235,0,0.925,0)
 		TowersButton.ZIndex = 4
 		TowersButton.Text = ""
-		
-		
+
+
 		local TextConstraint = Instance.new("UITextSizeConstraint")
 		TextConstraint.Parent = TowersButton
 		TextConstraint.MaxTextSize = 25
@@ -235,7 +237,7 @@ local function AdminPanelMain()
 		TowersText.AnchorPoint = Vector2.new(0,0.5)
 		TowersText.Size = UDim2.new(1,0,0.7,0)
 		TowersText.Font = Enum.Font.SourceSansBold
-		
+
 		local bg = Instance.new("ImageLabel")
 		bg.Name = "Background"
 		bg.Parent = TowersButton
@@ -250,13 +252,13 @@ local function AdminPanelMain()
 		bg.AnchorPoint = Vector2.new(0.5,0.5)
 		bg.ZIndex = 3
 		bg.ClipsDescendants = true
-		
+
 		local UIGradient9 = Instance.new("UIGradient")
 		UIGradient9.Parent = bg
 		UIGradient9.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.760784, 0.760784, 0.760784))
 		UIGradient9.Rotation = 90
-		
-		
+
+
 		local bg1 = Instance.new("ImageLabel")
 		bg1.Name = "BackgroundDark"
 		bg1.Parent = TowersButton
@@ -270,7 +272,7 @@ local function AdminPanelMain()
 		bg1.Size = UDim2.new(1,0,1,0)
 		bg1.AnchorPoint = Vector2.new(0.5,0.5)
 		bg1.ZIndex = 2
-		
+
 		local bg2 = Instance.new("ImageLabel")
 		bg2.Name = "Icon"
 		bg2.Parent = bg
@@ -282,22 +284,36 @@ local function AdminPanelMain()
 		bg2.Size = UDim2.new(0.9,0,1.2,0)
 		bg2.SliceScale = 1
 		bg2.ZIndex = 3
+		
+		
+		TowersButton.MouseButton1Down:Connect(function()
+			local chi = Menu.AdminPanelFrame.Mainframe:GetChildren()
+			for i = 1, #chi do
+				if chi[i]:IsA("Frame") then
+					chi[i].Visible = false
+					
+				end
+			end
+			
+			
+			Menu.AdminPanelFrame.Mainframe:FindFirstChild(Name.."Frame").Visible = true
+		end)
 	end
-	
+
 	CreateButtonsButton("Towers",Buttons,"TOWERS",UDim2.new(0,0,0,0),Color3.fromRGB(221, 30, 24),Color3.fromRGB(131, 40, 39),Color3.fromRGB(129, 0, 0))
 	CreateButtonsButton("Perks",Buttons,"PERKS",UDim2.new(0.255,0,0,0),Color3.fromRGB(255, 167, 15),Color3.fromRGB(154, 101, 9),Color3.fromRGB(111, 70, 5))
 	CreateButtonsButton("Cosmetics",Buttons,"COSMETICS",UDim2.new(0.51,0,0,0),Color3.fromRGB(0, 170, 255),Color3.fromRGB(0, 105, 150),Color3.fromRGB(0, 95, 143))
 	CreateButtonsButton("Crates",Buttons,"CRATES",UDim2.new(1,0,0,0),Color3.fromRGB(170, 85, 255),Color3.fromRGB(110, 54, 166),Color3.fromRGB(83, 40, 125))
-	
+
 	Buttons.Crates.AnchorPoint = Vector2.new(1,0)
 	Buttons.Crates.Background.Icon.Image = "http://www.roblox.com/asset/?id=6522014622"
 	Buttons.Crates.Background.Icon.Size = UDim2.new(0.5,0,1.2,0)
 	Buttons.Crates.Background.Icon.Position = UDim2.new(0.25,0,-0.1,0)
-	
+
 	Buttons.Cosmetics.Background.Icon.Image = "http://www.roblox.com/asset/?id=6521979594"
 	Buttons.Cosmetics.Background.Icon.Size = UDim2.new(0.6,0,1.25,0)
 	Buttons.Cosmetics.Background.Icon.Position = UDim2.new(0.250,0,0)
-	
+
 	Buttons.Perks.Background.Icon.Image = "http://www.roblox.com/asset/?id=7653655795"
 	Buttons.Perks.Background.Icon.Size = UDim2.new(0.5, 0,1.2, 0)
 	Buttons.Perks.Background.Icon.Position = UDim2.new(0.025, 0,-0.1, 0)
@@ -307,13 +323,13 @@ local function AdminPanelMain()
 	newic.Size = UDim2.new(0.6,0,1.2,0)
 	newic.Position = UDim2.new(0.475,0,-0.1,0)
 	newic.Parent = Buttons.Perks.Background
-	
+
 	local UIGradient4 = Instance.new("UIGradient")
 	UIGradient4.Parent = Frame1
 	UIGradient4.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
 	UIGradient4.Rotation = 90
-	
-	
+
+
 	local AspectRatio = Instance.new("UIAspectRatioConstraint")
 	AspectRatio.AspectRatio = 1.38
 	AspectRatio.AspectType = Enum.AspectType.FitWithinMaxSize
@@ -344,7 +360,7 @@ local function AdminPanelMain()
 	XButton.TextColor3 = Color3.fromRGB(255,255,255)
 	XButton.ZIndex = 2
 	XButton.Parent = Frame1
-	
+
 	local UIGradient3 = Instance.new("UIGradient")
 	UIGradient3.Parent = XButton
 	UIGradient3.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
@@ -401,20 +417,20 @@ local function AdminPanelMain()
 	local UICorner = Instance.new("UICorner")
 	UICorner.Parent = CurrencyFrame
 	UICorner.CornerRadius = UDim.new(0,6)
-	
+
 	local Token = Instance.new("Frame")
 	Token.Parent = CurrencyFrame
 	Token.BackgroundTransparency = 1
 	Token.Position = UDim2.new(0.025,0,0.05,0)
 	Token.Size = UDim2.new(1,0,0.5,0)
-	
+
 	local TokenImg = Instance.new("ImageLabel")
 	TokenImg.Parent = Token
 	TokenImg.Image = "http://www.roblox.com/asset/?id=7759237760"
 	TokenImg.Size = UDim2.new(1,0,1,0)
 	TokenImg.BackgroundTransparency = 1
 	TokenImg.SizeConstraint = Enum.SizeConstraint.RelativeYY
-	
+
 	local TokenText = Instance.new("TextLabel")
 	TokenText.Parent = Token
 	TokenText.Position = UDim2.new(0.25,0,0,0)
@@ -428,7 +444,7 @@ local function AdminPanelMain()
 	TokenText.TextStrokeTransparency = 0.75
 	TokenText.AnchorPoint = Vector2.new(0,0.05)
 	TokenText.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	local TokenText2 = Instance.new("TextLabel")
 	TokenText2.Parent = TokenText
 	TokenText2.Position = UDim2.new(0,0,0,0)
@@ -443,11 +459,11 @@ local function AdminPanelMain()
 	TokenText2.AnchorPoint = Vector2.new(0,0.05)
 	TokenText2.Visible = false
 	TokenText2.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	game.Players.LocalPlayer.PlayerData.Stats.Tokens.Changed:Connect(function()
 		TokenText.Text = game.Players.LocalPlayer.PlayerData.Stats.Tokens.Value
 	end)
-	
+
 	local u1 = false
 	TokenText.MouseEnter:Connect(function()
 		if u1 == false then
@@ -457,7 +473,7 @@ local function AdminPanelMain()
 			TokenText.TokenText.Visible = true;
 		end;
 	end)
-	
+
 	TokenText.MouseLeave:Connect(function()
 		if u1 == true then
 			u1 = false;
@@ -466,7 +482,7 @@ local function AdminPanelMain()
 			TokenText.TokenText.Visible = false;
 		end;
 	end)
-	
+
 
 	Gradient(AdminPanelText)
 
@@ -483,9 +499,9 @@ local function AdminPanelMain()
 	Frame2.Position = UDim2.new(0,0,0.02,0)
 	Frame2.Size = UDim2.new(1,0,1,0)
 	Frame2.ZIndex = 0
-	
 
-	
+
+
 	if PanelType == "Beta" then
 		local MainFrame = Instance.new("ImageLabel")
 		MainFrame.Name = "Mainframe"
@@ -500,97 +516,136 @@ local function AdminPanelMain()
 		MainFrame.Size = UDim2.new(0.9,0,0.7,0)
 		MainFrame.ImageTransparency = 0.65
 		MainFrame.ZIndex = 1
-		
+
 		local TowersFrame = Instance.new("Frame")
 		TowersFrame.Parent = MainFrame
 		TowersFrame.Size = UDim2.new(1,0,1,0)
 		TowersFrame.Position = UDim2.new(0,0,0,0)
 		TowersFrame.BackgroundTransparency = 1
 		TowersFrame.Name = "TowersFrame"
+
+
+
+local function PerksFrame()
+
+		local PerksFrame = Instance.new("Frame")
+		PerksFrame.Parent = MainFrame
+		PerksFrame.Size = UDim2.new(1,0,1,0)
+		PerksFrame.Position = UDim2.new(0,0,0,0)
+		PerksFrame.BackgroundTransparency = 1
+		PerksFrame.Name = "PerksFrame"
+		PerksFrame.Visible = false
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			local Menus = Instance.new("Frame")
+			Menus.Parent = PerksFrame
+			Menus.Size = UDim2.new(1,0,1,0)
+			Menus.Position = UDim2.new(0,0,0,0)
+			Menus.BackgroundTransparency = 1
+			Menus.Name = "Menus"
+			Menus.Visible = true
+			
+			local AllPerks = Instance.new("Frame")
+			AllPerks.Parent = Menus
+			AllPerks.Size = UDim2.new(1,0,1,0)
+			AllPerks.Position = UDim2.new(0,0,0,0)
+			AllPerks.BackgroundTransparency = 1
+			AllPerks.Name = "AllPerks"
+			AllPerks.Visible = true
+
+			local Title = Instance.new("TextLabel")
+			Title.TextColor3 = Color3.fromRGB(255,255,255)
+			Title.Text = "ALL EQUIPPED PERKS"
+			Title.Parent = AllPerks
+			Title.TextScaled = true
+			Title.TextStrokeTransparency = 0.75
+			Title.Font = Enum.Font.SourceSansBold
+			Title.ZIndex = 4
+			Title.BackgroundTransparency = 1
+			Title.Size = UDim2.new(1,0,0.15,0)
+			Title.Position = UDim2.new(0,0,0,0)
+			
+			local function NewGradient(p)
+				local Grad = Instance.new("UIGradient")
+				Grad.Parent = p
+				Grad.Rotation = -90
+				Grad.Color = ColorSequence.new(Color3.fromRGB(108,108,108),Color3.fromRGB(255,255,255))
+			end
+
+NewGradient(Title)
+
+
+
+
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		local function InfoFrame()
-		local InfoFrame = Instance.new("Frame")
+			local InfoFrame = Instance.new("Frame")
 			InfoFrame.Parent = TowersFrame
 			InfoFrame.Name = "InfoFrame"
-		InfoFrame.Size = UDim2.new(0.4,0,1,0)
-		InfoFrame.Position = UDim2.new(0,0,0,0)
-		InfoFrame.BackgroundTransparency = 1
-		
-		local Background = Instance.new("ImageLabel")
-		Background.Name = "Background"
-		Background.Parent = InfoFrame
-		Background.Image = "rbxassetid://3570695787"
-		Background.ImageColor3 = Color3.fromRGB(50, 50, 50)
-		Background.BackgroundTransparency = 1
-		Background.SliceScale = 0.12
-		Background.ScaleType = Enum.ScaleType.Slice
-		Background.SliceCenter = Rect.new(100, 100, 100, 100)
-		Background.Position = UDim2.new(0.51,0,0.5,0)
-		Background.Size = UDim2.new(0.95,0,0.95,0)
-		Background.ZIndex = 3
-		Background.AnchorPoint = Vector2.new(0.5,0.5)
-		
+			InfoFrame.Size = UDim2.new(0.4,0,1,0)
+			InfoFrame.Position = UDim2.new(0,0,0,0)
+			InfoFrame.BackgroundTransparency = 1
+
+			local Background = Instance.new("ImageLabel")
+			Background.Name = "Background"
+			Background.Parent = InfoFrame
+			Background.Image = "rbxassetid://3570695787"
+			Background.ImageColor3 = Color3.fromRGB(50, 50, 50)
+			Background.BackgroundTransparency = 1
+			Background.SliceScale = 0.12
+			Background.ScaleType = Enum.ScaleType.Slice
+			Background.SliceCenter = Rect.new(100, 100, 100, 100)
+			Background.Position = UDim2.new(0.51,0,0.5,0)
+			Background.Size = UDim2.new(0.95,0,0.95,0)
+			Background.ZIndex = 3
+			Background.AnchorPoint = Vector2.new(0.5,0.5)
+
 			local ViewPort = game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Mainframe.TowersFrame.InfoFrame.Background.ViewportFrame:Clone()
 			ViewPort.Parent = Background
-			
-			
-			
-		
-		local Background2 = Instance.new("ImageLabel")
-		Background2.Name = "Background"
-		Background2.Parent = ViewPort
-		Background2.Image = "rbxassetid://3570695787"
-		Background2.ImageColor3 = Color3.fromRGB(57, 57, 57)
-		Background2.BackgroundTransparency = 1
-		Background2.SliceScale = 0.12
-		Background2.ScaleType = Enum.ScaleType.Slice
-		Background2.SliceCenter = Rect.new(100, 100, 100, 100)
-		Background2.Position = UDim2.new(0.5,0,0.475,0)
-		Background2.Size = UDim2.new(1,0,1,0)
-		Background2.ZIndex = 4
-			Background2.AnchorPoint = Vector2.new(0.5,0.5)
-			
 
-			
+
+
+
+			local Background2 = Instance.new("ImageLabel")
+			Background2.Name = "Background"
+			Background2.Parent = ViewPort
+			Background2.Image = "rbxassetid://3570695787"
+			Background2.ImageColor3 = Color3.fromRGB(57, 57, 57)
+			Background2.BackgroundTransparency = 1
+			Background2.SliceScale = 0.12
+			Background2.ScaleType = Enum.ScaleType.Slice
+			Background2.SliceCenter = Rect.new(100, 100, 100, 100)
+			Background2.Position = UDim2.new(0.5,0,0.475,0)
+			Background2.Size = UDim2.new(1,0,1,0)
+			Background2.ZIndex = 4
+			Background2.AnchorPoint = Vector2.new(0.5,0.5)
+
+
+
 			local Equip = Instance.new("TextButton")
 			Equip.Name = "Equip"
 			Equip.BackgroundTransparency = 1
@@ -602,7 +657,7 @@ local function AdminPanelMain()
 			Equip.Size = UDim2.new(0.475,0,0.175,0)
 			Equip.ZIndex = 7
 			Equip.Parent = Background
-			
+
 			local Unequip = Instance.new("TextButton")
 			Unequip.Name = "Unequip"
 			Unequip.BackgroundTransparency = 1
@@ -615,18 +670,18 @@ local function AdminPanelMain()
 			Unequip.ZIndex = 7
 			Unequip.Parent = Background
 			Unequip.Visible = false
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
 			local StatOptions = Instance.new("Frame")
 			StatOptions.Name = "StatOptions"
 			StatOptions.Parent = Background
@@ -634,7 +689,7 @@ local function AdminPanelMain()
 			StatOptions.Position = UDim2.new(0,0,0.735,0)
 			StatOptions.Size = UDim2.new(1,0,0.06,0)
 			StatOptions.ZIndex = 6
-			
+
 			local Circles = Instance.new("Frame")
 			Circles.Parent = StatOptions
 			Circles.Name = "Circles"
@@ -642,12 +697,12 @@ local function AdminPanelMain()
 			Circles.Size = UDim2.new(1,0,1,0)
 			Circles.ZIndex = 6
 			Circles.BackgroundTransparency = 1
-			
+
 			local LightCircle = Instance.new("ObjectValue")
 			LightCircle.Parent = StatOptions
 			LightCircle.Name = "LightCircle"
 			LightCircle.Value = LightCircle
-			
+
 			local UIGridLayoutNew = Instance.new("UIGridLayout")
 			UIGridLayoutNew.Parent = Circles
 			UIGridLayoutNew.CellPadding = UDim2.new(0,5,0,5)
@@ -656,7 +711,7 @@ local function AdminPanelMain()
 			UIGridLayoutNew.FillDirection = Enum.FillDirection.Horizontal
 			UIGridLayoutNew.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			UIGridLayoutNew.VerticalAlignment = Enum.VerticalAlignment.Top
-			
+
 			local One = Instance.new("TextButton")
 			One.Name = "1"
 			One.Parent = Circles
@@ -670,14 +725,14 @@ local function AdminPanelMain()
 			One.ZIndex = 6
 			One.TextScaled = true
 			One.AutoButtonColor = false
-			
+
 			local function Corner(p)
 				local Corner = Instance.new("UICorner")
 				Corner.Parent = p
 				Corner.CornerRadius = UDim.new(0,4)
 			end
 			Corner(One)
-			
+
 			local Two = Instance.new("TextButton")
 			Two.Name = "2"
 			Two.Parent = Circles
@@ -691,7 +746,7 @@ local function AdminPanelMain()
 			Two.ZIndex = 6
 			Two.TextScaled = true
 			Two.AutoButtonColor = false
-			
+
 			Corner(Two)
 			--[[
 			
@@ -711,12 +766,12 @@ local function AdminPanelMain()
 
 			Corner(Three)
 			]]
-	
-			
-			
-			
+
+
+
+
 			--Stats
-			
+
 			local StatsFrame = Instance.new("Frame")
 			StatsFrame.Parent = Background
 			StatsFrame.Name = "Stats"
@@ -725,7 +780,7 @@ local function AdminPanelMain()
 			StatsFrame.BackgroundTransparency = 1
 			StatsFrame.ZIndex = 4
 			StatsFrame.ClipsDescendants = true
-			
+
 			local Desc = Instance.new("TextLabel")
 			Desc.TextColor3 = Color3.fromRGB(236, 236, 236)
 			Desc.Text = ""
@@ -737,12 +792,12 @@ local function AdminPanelMain()
 			Desc.Font = Enum.Font.SourceSansBold
 			Desc.Parent = StatsFrame
 			Desc.ZIndex = 4
-			
-			
-			
+
+
+
 			--<font color=rgb(255, 170, 0)>AttackRate: 1.2s</font>
-			
-			
+
+
 			local TextLabel = Instance.new("TextLabel")
 			TextLabel.TextColor3 = Color3.fromRGB(77, 77, 77)
 			TextLabel.Text = "Test"
@@ -757,16 +812,16 @@ local function AdminPanelMain()
 			TextLabel.RichText = true
 			--TextLabel.Text = "Use a <b>bold title</b>"
 			--"Use a <b>bold title</b>"
-			
-			
+
+
 
 			--<br />
-			
-		
-			
-			
-			
-			
+
+
+
+
+
+
 			--[[
 			
 			local Colors = Instance.new("Frame")
@@ -826,13 +881,13 @@ local function AdminPanelMain()
 				)
 			end)
 ]]
-			
+
 			Two.MouseEnter:Connect(function()
 
 				One.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
 				--Three.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
 				Two.BackgroundColor3 = Color3.fromRGB(98, 98, 98)
-				
+
 				game:GetService("TweenService"):Create(Desc, TweenInfo.new(0.3), {
 					Position = UDim2.new(-1,0,0,0)
 				}):Play();
@@ -840,11 +895,11 @@ local function AdminPanelMain()
 				game:GetService("TweenService"):Create(TextLabel, TweenInfo.new(0.3), {
 					Position = UDim2.new(0,0,0,0)
 				}):Play();
-				
+
 				--game:GetService("TweenService"):Create(Colors, TweenInfo.new(0.3), {
 				--	Position = UDim2.new(1,0,0,0)
 				--}):Play();
-					
+
 			end)
 
 			One.MouseEnter:Connect(function()
@@ -852,7 +907,7 @@ local function AdminPanelMain()
 				Two.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
 				--Three.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
 				One.BackgroundColor3 = Color3.fromRGB(98, 98, 98)
-				
+
 				game:GetService("TweenService"):Create(Desc, TweenInfo.new(0.3), {
 					Position = UDim2.new(0,0,0,0)
 				}):Play();
@@ -860,12 +915,12 @@ local function AdminPanelMain()
 				game:GetService("TweenService"):Create(TextLabel, TweenInfo.new(0.3), {
 					Position = UDim2.new(1,0,0,0)
 				}):Play();
-				
+
 				--game:GetService("TweenService"):Create(Colors, TweenInfo.new(0.3), {
 				--	Position = UDim2.new(2,0,0,0)
 				--}):Play();
 
-				
+
 
 			end)
 			--[[
@@ -893,14 +948,14 @@ local function AdminPanelMain()
 			
 
 			]]--
-			
-			
+
+
 			local SelectedTower = Instance.new("StringValue")
 			SelectedTower.Name = "Selected Tower"
 			SelectedTower.Parent = Background
-			
+
 			Equip.MouseButton1Down:Connect(function()
-				
+
 				if PlrData.Loadout.Tower1.Value == "None" then
 					game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(1), SelectedTower.Value)
 					local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
@@ -957,82 +1012,82 @@ local function AdminPanelMain()
 									Equip.Active = false
 								else
 									if SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower5.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower4.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower3.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower2.Value and SelectedTower.Value ~= game.Players.LocalPlayer.PlayerData.Loadout.Tower1.Value then
-									local oldtower = game.Players.LocalPlayer.PlayerData.Loadout.Tower5
+										local oldtower = game.Players.LocalPlayer.PlayerData.Loadout.Tower5
 										local UnequipOld = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(oldtower.Value).Equipped
 										local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
 										SlotCheck.Value = 5
-									UnequipOld.Value = false
-									game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(5), SelectedTower.Value)
-									local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
-									
-									EquipChecker.Value = true
-									Unequip.Visible = true
-									Equip.Visible = false
-									Unequip.Active = true
+										UnequipOld.Value = false
+										game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(5), SelectedTower.Value)
+										local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
+
+										EquipChecker.Value = true
+										Unequip.Visible = true
+										Equip.Visible = false
+										Unequip.Active = true
 										Equip.Active = false
-										end
+									end
 								end
 							end
 						end
 					end
 				end
 			end)
-			
-			
-			
-			
+
+
+
+
 			SelectedTower.Changed:Connect(function()
 				Desc.Text = game.ReplicatedStorage.Units[SelectedTower.Value].Description.Value
-				
+
 			end)
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			Unequip.MouseButton1Down:Connect(function()
-				
+
 				if PlrData.Loadout.Tower1.Value == SelectedTower.Value then
 					local EquipChecker = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Equipped
 					EquipChecker.Value = false
 					game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 1})
 					game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 1})
-					
+
 					local SlotCheck = TowersFrame.ListFrame.ScrollFrame:FindFirstChild(SelectedTower.Value).Slot
 					SlotCheck.Value = ""
 					Unequip.Visible = false
@@ -1093,24 +1148,24 @@ local function AdminPanelMain()
 					end
 				end
 			end)
-			
-			
-			
-			
+
+
+
+
 			AddSoundsToButton(Equip,0,1)
 			AddSoundsToButton(Unequip,0,1)
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
 			local UIText = Instance.new("UITextSizeConstraint")
 			UIText.Parent = Equip
 			UIText.MaxTextSize = 30
 			UIText.MinTextSize = 1
-			
+
 			local tb = Instance.new("ImageLabel")
 			tb.Name = "TextButton_Roundify_12px"
 			tb.Parent = Equip
@@ -1124,8 +1179,8 @@ local function AdminPanelMain()
 			tb.Size = UDim2.new(1,0,1,0)
 			tb.ZIndex = 6
 			tb.AnchorPoint = Vector2.new(0.5,0.5)
-			
-			
+
+
 			local tb1 = Instance.new("ImageLabel")
 			tb1.Name = "BackgroundDark"
 			tb1.Parent = Equip
@@ -1139,23 +1194,23 @@ local function AdminPanelMain()
 			tb1.Size = UDim2.new(1,0,1,0)
 			tb1.ZIndex = 4
 			tb1.AnchorPoint = Vector2.new(0.5,0.5)
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			local UIText1 = Instance.new("UITextSizeConstraint")
 			UIText1.Parent = Unequip
 			UIText1.MaxTextSize = 30
@@ -1189,29 +1244,29 @@ local function AdminPanelMain()
 			tb4.Size = UDim2.new(1,0,1,0)
 			tb4.ZIndex = 4
 			tb4.AnchorPoint = Vector2.new(0.5,0.5)
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
 			local UIGradient1 = Instance.new("UIGradient")
 			UIGradient1.Parent = tb
 			UIGradient1.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
 			UIGradient1.Rotation = 90
-			
-			
-			
-			
+
+
+
+
 			local UIGradient2 = Instance.new("UIGradient")
 			UIGradient2.Parent = tb3
 			UIGradient2.Color = ColorSequence.new(Color3.new(1,1,1),Color3.new(0.909804, 0.909804, 0.909804))
 			UIGradient2.Rotation = 90
-			
+
 			local NameText = Instance.new("TextLabel")
 			NameText.Name = "NameText"
 			NameText.TextScaled = true
@@ -1223,7 +1278,7 @@ local function AdminPanelMain()
 			NameText.ZIndex = 10
 			NameText.Text = "Test"
 			NameText.Parent = Background
-			
+
 			local Type = Instance.new("TextLabel")
 			Type.Name = "Type"
 			Type.TextScaled = true
@@ -1236,21 +1291,21 @@ local function AdminPanelMain()
 			Type.ZIndex = 10
 			Type.Text = "Ground"
 			Type.Parent = Background
-			
+
 			SelectedTower.Changed:Connect(function()
 				NameText.Text = tostring(SelectedTower.Value)
 				if game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Ground") then
-						Type.Text = "Ground"
-						
+					Type.Text = "Ground"
+
 				elseif game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Cliff") then
 					Type.Text = "Cliff"
 				elseif game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Path") then
 					Type.Text = "Path"
 				elseif game.ReplicatedStorage.Units[SelectedTower.Value].Tags:FindFirstChild("Hybrid") then
 					Type.Text = "Ground & Cliff"
-					end
+				end
 			end)
-			
+
 		end
 		InfoFrame()
 		local function ListFrame()
@@ -1260,7 +1315,7 @@ local function AdminPanelMain()
 			ListFrame1.Size = UDim2.new(0.6,0,1,0)
 			ListFrame1.Position = UDim2.new(0.4,0,0,0)
 			ListFrame1.BackgroundTransparency = 1
-			
+
 			local ScrollFrame = Instance.new("ScrollingFrame")
 			ScrollFrame.Parent = ListFrame1
 			ScrollFrame.Position = UDim2.new(0,0,0,0)
@@ -1269,20 +1324,20 @@ local function AdminPanelMain()
 			ScrollFrame.Name = "ScrollFrame"
 			ScrollFrame.CanvasSize = UDim2.new(0,0,3,0)
 			ScrollFrame.CanvasPosition = Vector2.new(0,9)
-			
+
 			local UIGrid = Instance.new("UIGridLayout")
 			UIGrid.Parent = ScrollFrame
 			UIGrid.CellPadding = UDim2.new(0,3,0.005,0)
 			UIGrid.CellSize = UDim2.new(0,100,0,100)
 			UIGrid.HorizontalAlignment = Enum.HorizontalAlignment.Left
 			UIGrid.FillDirection = Enum.FillDirection.Horizontal
-			
+
 			local UIPadding = Instance.new("UIPadding")
 			UIPadding.Parent = ScrollFrame
 			UIPadding.PaddingLeft = UDim.new(0.04,0)
 			UIPadding.PaddingTop = UDim.new(0.006,0)
 		end
-	
+
 		ListFrame()
 		local function AddTower(TowerName)
 			if game.ReplicatedStorage.Units:FindFirstChild(TowerName) then
@@ -1294,7 +1349,7 @@ local function AdminPanelMain()
 				Button.Size = UDim2.new(0,200,0,50)
 				Button.Position = UDim2.new(0,0,0,0)
 				Button.Parent = ScrollFrame
-				
+
 				local Bg1 = Instance.new("ImageLabel")
 				Bg1.Name = "Background"
 				Bg1.Parent = Button
@@ -1307,7 +1362,7 @@ local function AdminPanelMain()
 				Bg1.Position = UDim2.new(0,0,0,0)
 				Bg1.Size = UDim2.new(1,0,0.95,0)
 				Bg1.ZIndex = 2
-				
+
 				local Bg2 = Instance.new("ImageLabel")
 				Bg2.Name = "BackgroundDark"
 				Bg2.Parent = Button
@@ -1320,7 +1375,7 @@ local function AdminPanelMain()
 				Bg2.Position = UDim2.new(0,0,0,0)
 				Bg2.Size = UDim2.new(1,0,1,0)
 				Bg2.ZIndex = 1
-				
+
 				local TextLabel = Instance.new("TextLabel")
 				TextLabel.Parent = Button
 				TextLabel.Text = TowerName
@@ -1331,7 +1386,7 @@ local function AdminPanelMain()
 				TextLabel.Font = Enum.Font.SourceSansBold
 				TextLabel.ZIndex = 5
 				TextLabel.TextScaled = true
-				
+
 				local Bg3 = Instance.new("ImageLabel")
 				Bg3.Name = "TextLabel_Roundify_5px"
 				Bg3.Parent = TextLabel
@@ -1346,22 +1401,22 @@ local function AdminPanelMain()
 				Bg3.ZIndex = 3
 				Bg3.ImageTransparency = 0.5
 				Bg3.AnchorPoint = Vector2.new(0.5,0.5)
-				
+
 				local Equipped = Instance.new("BoolValue")
 				Equipped.Name = "Equipped"
 				Equipped.Parent = Button
 				Equipped.Value = false
-				
+
 				local Slot = Instance.new("NumberValue")
 				Slot.Name = "Slot"
 				Slot.Parent = Button
 				Slot.Value = nil
-				
+
 				local Level = Instance.new("NumberValue")
 				Level.Name = "Level"
 				Level.Parent = Button
 				Level.Value = 0
-				
+
 				local EquippedSlot = Instance.new("TextLabel")
 				EquippedSlot.TextColor3 = Color3.fromRGB(0, 255, 0)
 				EquippedSlot.TextStrokeTransparency = 0.75
@@ -1376,13 +1431,13 @@ local function AdminPanelMain()
 				EquippedSlot.Position = UDim2.new(0.075,0,0,0)
 				EquippedSlot.Text = ""
 				EquippedSlot.Parent = Button
-				
-				
+
+
 				local TowerView = game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Mainframe.TowersFrame.ListFrame.ScrollFrame:FindFirstChild(TowerName).Icon:Clone()
 				TowerView.Parent = Button
 				AddSoundsToButton(Button,1,1)
 				ButtonEffects(Button)
-				
+
 				Button.MouseButton1Down:Connect(function()
 					local Background = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background
 					local SelectedTower = Background["Selected Tower"]
@@ -1400,8 +1455,8 @@ local function AdminPanelMain()
 						end
 						--local Selected = game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Mainframe.TowersFrame.TowersMain.Selected
 						--Selected.Value = TowerName
-						
-						
+
+
 						local v12 = require(game.ReplicatedStorage.Modules.CTDModule);
 						local function CreateModel(p5, p6, p7, p8)
 							spawn(function()
@@ -1422,16 +1477,16 @@ local function AdminPanelMain()
 						Equip.Visible = false
 						Unequip.Active = true
 						Equip.Active = false
-						
-						
-						
-						
-						
 
-						
+
+
+
+
+
+
 					end
 				end)
-				
+
 				Equipped.Changed:Connect(function()
 					if Equipped.Value == true then
 						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
@@ -1441,26 +1496,26 @@ local function AdminPanelMain()
 						Bg2.ImageColor3 = Color3.fromRGB(67, 67, 67)
 					end
 				end)
-				
+
 				Slot.Changed:Connect(function()
 					if Slot.Value == 0 then
 						EquippedSlot.Text = ""
-						else
+					else
 						EquippedSlot.Text = Slot.Value
-						end
+					end
 				end)
-				
+
 			end
-			
-			
-			
-			
+
+
+
+
 		end
 		local c = game.ReplicatedStorage.Units:GetChildren()
 		for i = 1, #c do
 			AddTower(c[i].Name)
 		end
-		
+
 	end
 end
 AdminPanelMain()
@@ -1492,13 +1547,13 @@ AdminButton.MouseButton1Down:Connect(function()
 		game.Players.LocalPlayer.PlayerGui.Menu.ShopFrame.Visible = false
 		game.Players.LocalPlayer.PlayerGui.Menu.BountiesFrame.Visible = false
 		game.Players.LocalPlayer.PlayerGui.Menu.OtherFrame.Visible = false
-		
-		
+
+
 		Menu.AdminPanelFrame.Position = oldpos + UDim2.new(0, 0, 0.05, 0);
 		game:GetService("TweenService"):Create(Menu.AdminPanelFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
 			Position = Menu.AdminPanelFrame.Position - UDim2.new(0, 0, 0.05, 0)
 		}):Play();
-		
+
 	elseif debounce == true then
 		Menu.AdminPanelFrame.Visible = false
 		debounce = false
@@ -1506,28 +1561,28 @@ AdminButton.MouseButton1Down:Connect(function()
 end)
 
 game.Players.LocalPlayer.PlayerGui.Menu.EquipmentButton.MouseButton1Down:Connect(function()
-	
+
 	debounce = false
 	task.wait(0.05)
 	Menu.AdminPanelFrame.Visible = false
 end)
 
 game.Players.LocalPlayer.PlayerGui.Menu.BountiesButton.MouseButton1Down:Connect(function()
-	
+
 	debounce = false
 	task.wait(0.05)
 	Menu.AdminPanelFrame.Visible = false
 end)
 
 game.Players.LocalPlayer.PlayerGui.Menu.OtherButton.MouseButton1Down:Connect(function()
-	
+
 	debounce = false
 	task.wait(0.05)
 	Menu.AdminPanelFrame.Visible = false
 end)
 
 game.Players.LocalPlayer.PlayerGui.Menu.ShopButton.MouseButton1Down:Connect(function()
-	
+
 	debounce = false
 	task.wait(0.05)
 	Menu.AdminPanelFrame.Visible = false
