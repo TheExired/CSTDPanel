@@ -204,7 +204,7 @@ local function AdminPanelMain()
 	Buttons.Position = UDim2.new(0.5,0,0.1425,0)
 	Buttons.Size = UDim2.new(0.9,0,0.11,0)
 	Buttons.AnchorPoint = Vector2.new(0.5,0)
-	
+
 
 
 	local function CreateButtonsButton(Name,Parent,CapsName,Position,Col1,Col2,Col3)
@@ -284,18 +284,18 @@ local function AdminPanelMain()
 		bg2.Size = UDim2.new(0.9,0,1.2,0)
 		bg2.SliceScale = 1
 		bg2.ZIndex = 3
-		
-		
+
+
 		TowersButton.MouseButton1Down:Connect(function()
 			local chi = Menu.AdminPanelFrame.Mainframe:GetChildren()
 			for i = 1, #chi do
 				if chi[i]:IsA("Frame") then
 					chi[i].Visible = false
-					
+
 				end
 			end
-			
-			
+
+
 			Menu.AdminPanelFrame.Mainframe:FindFirstChild(Name.."Frame").Visible = true
 		end)
 	end
@@ -526,17 +526,34 @@ local function AdminPanelMain()
 
 
 
-local function PerksFrame()
+		local function PerksFrame()
+			
+			local function NewCorner(p,rad)
+				local corner = Instance.new("UICorner")
+				corner.Parent = p
+				corner.CornerRadius = rad
+			end
 
-		local PerksFrame = Instance.new("Frame")
-		PerksFrame.Parent = MainFrame
-		PerksFrame.Size = UDim2.new(1,0,1,0)
-		PerksFrame.Position = UDim2.new(0,0,0,0)
-		PerksFrame.BackgroundTransparency = 1
-		PerksFrame.Name = "PerksFrame"
-		PerksFrame.Visible = false
-		
-		
+			local function NewGrad(p)
+				local Grad = Instance.new("UIGradient")
+				Grad.Parent = p
+				Grad.Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(184,184,184)),
+					ColorSequenceKeypoint.new(0.241, Color3.fromRGB(255,255,255)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
+				}
+				Grad.Rotation = 90
+			end
+
+			local PerksFrame = Instance.new("Frame")
+			PerksFrame.Parent = MainFrame
+			PerksFrame.Size = UDim2.new(1,0,1,0)
+			PerksFrame.Position = UDim2.new(0,0,0,0)
+			PerksFrame.BackgroundTransparency = 1
+			PerksFrame.Name = "PerksFrame"
+			PerksFrame.Visible = false
+
+
 			local Menus = Instance.new("Frame")
 			Menus.Parent = PerksFrame
 			Menus.Size = UDim2.new(1,0,1,0)
@@ -544,7 +561,7 @@ local function PerksFrame()
 			Menus.BackgroundTransparency = 1
 			Menus.Name = "Menus"
 			Menus.Visible = true
-			
+
 			local AllPerks = Instance.new("Frame")
 			AllPerks.Parent = Menus
 			AllPerks.Size = UDim2.new(1,0,1,0)
@@ -565,27 +582,192 @@ local function PerksFrame()
 			Title.Size = UDim2.new(1,0,0.15,0)
 			Title.Position = UDim2.new(0,0,0,0)
 			
+			local TextBG = Instance.new("Frame")
+			TextBG.Parent = Title
+			TextBG.Position = UDim2.new(0.5,0,0.5,0)
+			TextBG.Size = UDim2.new(0.8,0,0.75,0)
+			TextBG.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+			TextBG.AnchorPoint = Vector2.new(0.5,0.5)
+			TextBG.ZIndex = 2
+			
+			local Fram = Instance.new("Frame")
+			Fram.Parent = Title
+			Fram.Size = UDim2.new(1,0,1,0)
+			Fram.Position = UDim2.new(0,0,0,0)
+			Fram.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+			Fram.BorderSizePixel = 0
+			NewCorner(Fram,UDim.new(0,8))
+			
+			
+
 			local function NewGradient(p)
 				local Grad = Instance.new("UIGradient")
 				Grad.Parent = p
 				Grad.Rotation = -90
-				Grad.Color = ColorSequence.new(Color3.fromRGB(108,108,108),Color3.fromRGB(255,255,255))
+				Grad.Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(108,108,108)),
+					ColorSequenceKeypoint.new(0.398, Color3.fromRGB(255,255,255)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
+				}
+			end
+			
+			local function NewGradientFinale(p, Colors)
+				local Grad = Instance.new("UIGradient")
+				Grad.Parent = p
+				Grad.Rotation = -90
+				Grad.Color = Colors
+			end
+			
+			local function NewGradientTrans(p)
+				local Grad = Instance.new("UIGradient")
+				Grad.Parent = p
+				Grad.Rotation = 0
+				Grad.Transparency = NumberSequence.new{
+					NumberSequenceKeypoint.new(0,1),
+					NumberSequenceKeypoint.new(0.2,0),
+					NumberSequenceKeypoint.new(0.8,0),
+					NumberSequenceKeypoint.new(1,1)
+				}
+				
+				
 			end
 
-NewGradient(Title)
+			NewGradient(Title)
+			NewCorner(TextBG,UDim.new(0,8))
+NewGradientTrans(TextBG)
+			
+			
+			
+			local List = Instance.new("Frame")
+			List.Parent = AllPerks
+			List.Name = "List"
+			List.BackgroundTransparency = 1
+			List.Size = UDim2.new(1,0,0.85,0)
+			List.Position = UDim2.new(0,0,0.15,0)
+			
+			local UIGridLayout = Instance.new("UIGridLayout")
+			UIGridLayout.Parent = List
+			UIGridLayout.CellPadding = UDim2.new(0.015,0,0,0)
+			UIGridLayout.CellSize = UDim2.new(0.49,0,0.5,0)
+			UIGridLayout.FillDirection = Enum.FillDirection.Horizontal
+			
+			local NUIPadding = Instance.new("UIPadding")
+			NUIPadding.Parent = List
+			NUIPadding.PaddingTop = UDim.new(0.025,0)
+			NUIPadding.PaddingRight = UDim.new(0.01,0)
+			NUIPadding.PaddingLeft = UDim.new(0.01,0)
+			NUIPadding.PaddingBottom = UDim.new(0,0)
+			
+			local Basic = Instance.new("Frame")
+			Basic.Parent = List
+			Basic.Name = "Basic"
+			Basic.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Basic.Size = UDim2.new(1,0,0.85,0)
+			Basic.Position = UDim2.new(0,0,0.15,0)
+			
+			local Slot = Instance.new("Frame")
+			Slot.Parent = List
+			Slot.Name = "Slot"
+			Slot.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Slot.Size = UDim2.new(1,0,0.85,0)
+			Slot.Position = UDim2.new(0,0,0.15,0)
+			
+			
+			
+			NewCorner(Basic,UDim.new(0,8))
+			NewCorner(Slot,UDim.new(0,8))
+			
+			
+			
+			
+			NewGrad(Basic)
+			NewGrad(Slot)
+			
+			
+			local BasicBGFrame = Instance.new("Frame")
+			BasicBGFrame.Name = "BGFrame"
+			BasicBGFrame.Parent = Basic
+			BasicBGFrame.Position = UDim2.new(0.5,0,0.025,0)
+			BasicBGFrame.Size = UDim2.new(0.95,0,0.975,0)
+			BasicBGFrame.BackgroundColor3 = Color3.fromRGB(50,50,50)
+			BasicBGFrame.AnchorPoint = Vector2.new(0.5,0)
+			BasicBGFrame.ZIndex = 3
+			BasicBGFrame.Visible = false
+			NewCorner(BasicBGFrame,UDim.new(0,8))
+			
+			local BasicEquipped = Instance.new("Frame")
+			BasicEquipped.Name = "BasicEquipped"
+			BasicEquipped.Parent = Basic
+			BasicEquipped.Position = UDim2.new(0,0,0.15,0)
+			BasicEquipped.Size = UDim2.new(1,0,0.75,0)
+			BasicEquipped.BackgroundColor3 = Color3.fromRGB(50,50,50)
+			BasicEquipped.BackgroundTransparency = 1
+			BasicEquipped.ZIndex = 1
+			BasicEquipped.Visible = true
+			
+			local BasG = Instance.new("ImageLabel")
+			BasG.Name = "Background"
+			BasG.Parent = BasicEquipped
+			BasG.Image = "rbxassetid://3570695787"
+			BasG.ImageColor3 = Color3.fromRGB(50,50,50)
+			BasG.BackgroundTransparency = 1
+			BasG.SliceScale = 0.12
+			BasG.ScaleType = Enum.ScaleType.Slice
+			BasG.SliceCenter = Rect.new(100, 100, 100, 100)
+			BasG.Position = UDim2.new(0.51,0,0.5,0)
+			BasG.Size = UDim2.new(0.95,0,0.95,0)
+			BasG.AnchorPoint = Vector2.new(0.5,0.5)
+			BasG.ZIndex = 3
+			
+			local BasicBG = Instance.new("Frame")
+			BasicBG.Name = "BG"
+			BasicBG.Parent = BasG
+			BasicBG.Position = UDim2.new(0.018,0,0.185,0)
+			BasicBG.Size = UDim2.new(0.965,0,0.78,0)
+			BasicBG.BackgroundColor3 = Color3.fromRGB(40,40,40)
+			BasicBG.BackgroundTransparency = 0
+			BasicBG.ZIndex = 7
+			
+			local NoEquipped = Instance.new("TextLabel")
+			NoEquipped.Parent = BasicBG
+			NoEquipped.Text = "No Basic Perks equipped"
+			NoEquipped.Name = "NoEquipped"
+			NoEquipped.TextColor3 = Color3.fromRGB(77, 77, 77)
+			NoEquipped.Font = Enum.Font.SourceSansBold
+			NoEquipped.Size = UDim2.new(1,0,0.7,0)
+			NoEquipped.Position = UDim2.new(0,0,0.5,0)
+			NoEquipped.BackgroundTransparency = 1
+			NoEquipped.AnchorPoint = Vector2.new(0,0.5)
+			NoEquipped.TextScaled = true
+			NoEquipped.ZIndex = 7
+			
+			local List2 = Instance.new("ScrollingFrame")
+			List2.Parent = BasG
+			List2.Name = "List"
+			List2.Position = UDim2.new(0.5,0,0.185,0)
+			List2.Size = UDim2.new(0.95,0,0.78,0)
+			List2.BackgroundTransparency = 1
+			List2.ZIndex = 8
+			List2.AnchorPoint = Vector2.new(0.5,0)
+			List2.ClipsDescendants = true
+			List2.CanvasSize = UDim2.new(0,0,3.5,0)
+			List2.ScrollBarThickness = 8
+			List2.BorderSizePixel = 0
+			
+			
+			NewCorner(BasicBG,UDim.new(0,8))
+			NewGradientFinale(BasicBG,ColorSequence.new{
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(177,177,177)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
+			})
+		end
 
 
 
 
 
-end
 
-
-
-
-
-
-
+		PerksFrame()
 
 
 
