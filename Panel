@@ -527,7 +527,7 @@ local function AdminPanelMain()
 
 
 		local function PerksFrame()
-			
+
 			local function NewCorner(p,rad)
 				local corner = Instance.new("UICorner")
 				corner.Parent = p
@@ -581,7 +581,7 @@ local function AdminPanelMain()
 			Title.BackgroundTransparency = 1
 			Title.Size = UDim2.new(1,0,0.15,0)
 			Title.Position = UDim2.new(0,0,0,0)
-			
+
 			local TextBG = Instance.new("Frame")
 			TextBG.Parent = Title
 			TextBG.Position = UDim2.new(0.5,0,0.5,0)
@@ -589,7 +589,7 @@ local function AdminPanelMain()
 			TextBG.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 			TextBG.AnchorPoint = Vector2.new(0.5,0.5)
 			TextBG.ZIndex = 2
-			
+
 			local Fram = Instance.new("Frame")
 			Fram.Parent = Title
 			Fram.Size = UDim2.new(1,0,1,0)
@@ -597,8 +597,8 @@ local function AdminPanelMain()
 			Fram.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
 			Fram.BorderSizePixel = 0
 			NewCorner(Fram,UDim.new(0,8))
-			
-			
+
+
 
 			local function NewGradient(p)
 				local Grad = Instance.new("UIGradient")
@@ -610,14 +610,14 @@ local function AdminPanelMain()
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
 				}
 			end
-			
+
 			local function NewGradientFinale(p, Colors)
 				local Grad = Instance.new("UIGradient")
 				Grad.Parent = p
 				Grad.Rotation = -90
 				Grad.Color = Colors
 			end
-			
+
 			local function NewGradientTrans(p)
 				local Grad = Instance.new("UIGradient")
 				Grad.Parent = p
@@ -628,62 +628,62 @@ local function AdminPanelMain()
 					NumberSequenceKeypoint.new(0.8,0),
 					NumberSequenceKeypoint.new(1,1)
 				}
-				
-				
+
+
 			end
 
 			NewGradient(Title)
 			NewCorner(TextBG,UDim.new(0,8))
-NewGradientTrans(TextBG)
-			
-			
-			
+			NewGradientTrans(TextBG)
+
+
+
 			local List = Instance.new("Frame")
 			List.Parent = AllPerks
 			List.Name = "List"
 			List.BackgroundTransparency = 1
 			List.Size = UDim2.new(1,0,0.85,0)
 			List.Position = UDim2.new(0,0,0.15,0)
-			
+
 			local UIGridLayout = Instance.new("UIGridLayout")
 			UIGridLayout.Parent = List
 			UIGridLayout.CellPadding = UDim2.new(0.015,0,0,0)
 			UIGridLayout.CellSize = UDim2.new(0.49,0,0.5,0)
 			UIGridLayout.FillDirection = Enum.FillDirection.Horizontal
-			
+
 			local NUIPadding = Instance.new("UIPadding")
 			NUIPadding.Parent = List
 			NUIPadding.PaddingTop = UDim.new(0.025,0)
 			NUIPadding.PaddingRight = UDim.new(0.01,0)
 			NUIPadding.PaddingLeft = UDim.new(0.01,0)
 			NUIPadding.PaddingBottom = UDim.new(0,0)
-			
+
 			local Basic = Instance.new("Frame")
 			Basic.Parent = List
 			Basic.Name = "Basic"
 			Basic.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 			Basic.Size = UDim2.new(1,0,0.85,0)
 			Basic.Position = UDim2.new(0,0,0.15,0)
-			
+
 			local Slot = Instance.new("Frame")
 			Slot.Parent = List
 			Slot.Name = "Slot"
 			Slot.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 			Slot.Size = UDim2.new(1,0,0.85,0)
 			Slot.Position = UDim2.new(0,0,0.15,0)
-			
-			
-			
+
+
+
 			NewCorner(Basic,UDim.new(0,8))
 			NewCorner(Slot,UDim.new(0,8))
-			
-			
-			
-			
+
+
+
+
 			NewGrad(Basic)
 			NewGrad(Slot)
-			
-			
+
+
 			local BasicBGFrame = Instance.new("Frame")
 			BasicBGFrame.Name = "BGFrame"
 			BasicBGFrame.Parent = Basic
@@ -694,7 +694,7 @@ NewGradientTrans(TextBG)
 			BasicBGFrame.ZIndex = 3
 			BasicBGFrame.Visible = false
 			NewCorner(BasicBGFrame,UDim.new(0,8))
-			
+
 			local BasicEquipped = Instance.new("Frame")
 			BasicEquipped.Name = "BasicEquipped"
 			BasicEquipped.Parent = Basic
@@ -704,7 +704,7 @@ NewGradientTrans(TextBG)
 			BasicEquipped.BackgroundTransparency = 1
 			BasicEquipped.ZIndex = 1
 			BasicEquipped.Visible = true
-			
+
 			local BasG = Instance.new("ImageLabel")
 			BasG.Name = "Background"
 			BasG.Parent = BasicEquipped
@@ -718,7 +718,7 @@ NewGradientTrans(TextBG)
 			BasG.Size = UDim2.new(0.95,0,0.95,0)
 			BasG.AnchorPoint = Vector2.new(0.5,0.5)
 			BasG.ZIndex = 3
-			
+
 			local BasicBG = Instance.new("Frame")
 			BasicBG.Name = "BG"
 			BasicBG.Parent = BasG
@@ -727,7 +727,7 @@ NewGradientTrans(TextBG)
 			BasicBG.BackgroundColor3 = Color3.fromRGB(40,40,40)
 			BasicBG.BackgroundTransparency = 0
 			BasicBG.ZIndex = 7
-			
+
 			local NoEquipped = Instance.new("TextLabel")
 			NoEquipped.Parent = BasicBG
 			NoEquipped.Text = "No Basic Perks equipped"
@@ -740,7 +740,7 @@ NewGradientTrans(TextBG)
 			NoEquipped.AnchorPoint = Vector2.new(0,0.5)
 			NoEquipped.TextScaled = true
 			NoEquipped.ZIndex = 7
-			
+
 			local List2 = Instance.new("ScrollingFrame")
 			List2.Parent = BasG
 			List2.Name = "List"
@@ -753,8 +753,8 @@ NewGradientTrans(TextBG)
 			List2.CanvasSize = UDim2.new(0,0,3.5,0)
 			List2.ScrollBarThickness = 8
 			List2.BorderSizePixel = 0
-			
-			
+
+
 			NewCorner(BasicBG,UDim.new(0,8))
 			NewGradientFinale(BasicBG,ColorSequence.new{
 				ColorSequenceKeypoint.new(0, Color3.fromRGB(177,177,177)),
@@ -1494,8 +1494,8 @@ NewGradientTrans(TextBG)
 			local ListFrame1 = Instance.new("Frame")
 			ListFrame1.Parent = TowersFrame
 			ListFrame1.Name = "ListFrame"
-			ListFrame1.Size = UDim2.new(0.6,0,1,0)
-			ListFrame1.Position = UDim2.new(0.4,0,0,0)
+			ListFrame1.Size = UDim2.new(0.6,0,0.89,0)
+			ListFrame1.Position = UDim2.new(0.4,0,0.11,0)
 			ListFrame1.BackgroundTransparency = 1
 
 			local ScrollFrame = Instance.new("ScrollingFrame")
@@ -1505,12 +1505,12 @@ NewGradientTrans(TextBG)
 			ScrollFrame.BackgroundTransparency = 1
 			ScrollFrame.Name = "ScrollFrame"
 			ScrollFrame.CanvasSize = UDim2.new(0,0,3,0)
-			ScrollFrame.CanvasPosition = Vector2.new(0,9)
+			ScrollFrame.CanvasPosition = Vector2.new(0,0)
 
 			local UIGrid = Instance.new("UIGridLayout")
 			UIGrid.Parent = ScrollFrame
 			UIGrid.CellPadding = UDim2.new(0,3,0.005,0)
-			UIGrid.CellSize = UDim2.new(0,100,0,100)
+			UIGrid.CellSize = UDim2.new(0.225,0,0.084,0)
 			UIGrid.HorizontalAlignment = Enum.HorizontalAlignment.Left
 			UIGrid.FillDirection = Enum.FillDirection.Horizontal
 
@@ -1519,8 +1519,241 @@ NewGradientTrans(TextBG)
 			UIPadding.PaddingLeft = UDim.new(0.04,0)
 			UIPadding.PaddingTop = UDim.new(0.006,0)
 		end
-
 		ListFrame()
+		local function SearchFrame()
+
+			local function NewCorner(p,rad)
+				local corner = Instance.new("UICorner")
+				corner.Parent = p
+				corner.CornerRadius = rad
+			end
+
+			local function NewGrad(p,cl)
+				local Grad = Instance.new("UIGradient")
+				Grad.Parent = p
+				Grad.Color = cl
+				Grad.Rotation = 90
+			end
+			local ListFrame1 = Instance.new("Frame")
+			ListFrame1.Parent = TowersFrame
+			ListFrame1.Name = "SearchFrame"
+			ListFrame1.Size = UDim2.new(0.56,0,0.1,0)
+			ListFrame1.Position = UDim2.new(0.405,0,0.01,0)
+			ListFrame1.BackgroundTransparency = 1
+			ListFrame1.ZIndex = 11
+
+			local ListFrame2 = Instance.new("Frame")
+			ListFrame2.Parent = ListFrame1
+			ListFrame2.Name = "SearchFrame"
+			ListFrame2.Size = UDim2.new(1,0,1,0)
+			ListFrame2.Position = UDim2.new(0,0,0,0)
+			ListFrame2.BackgroundColor3 = Color3.fromRGB(76,76,76)
+			ListFrame2.ZIndex = 10
+
+			NewCorner(ListFrame2, UDim.new(0,8))
+
+			NewGrad(ListFrame2,ColorSequence.new(Color3.fromRGB(255,255,255),Color3.fromRGB(194,194,194)))
+
+			local SearchBox = Instance.new("TextBox")
+			SearchBox.Parent = ListFrame2
+			SearchBox.Size = UDim2.new(0.77,0,1,0)
+			SearchBox.Position = UDim2.new(0.23,0,0,0)
+			SearchBox.BackgroundTransparency = 1
+			SearchBox.ZIndex = 12
+			SearchBox.PlaceholderText = "Search"
+			SearchBox.TextColor3 = Color3.fromRGB(255,255,255)
+			SearchBox.Text = ""
+			SearchBox.Font = Enum.Font.SourceSansBold
+			SearchBox.TextScaled = true
+			SearchBox.TextStrokeTransparency = 0.75
+			SearchBox.PlaceholderColor3 = Color3.fromRGB(255,255,255)
+			SearchBox.ClearTextOnFocus = false
+			SearchBox.Name = "SearchBox"
+
+			local BG = Instance.new("Frame")
+			BG.Parent = SearchBox
+			BG.Name = "BG"
+			BG.Size = UDim2.new(1,0,1,0)
+			BG.Position = UDim2.new(0,0,0,0)
+			BG.BackgroundColor3 = Color3.fromRGB(100,100,100)
+			BG.ZIndex = 11
+
+			NewCorner(BG, UDim.new(0,8))
+
+			NewGrad(BG,ColorSequence.new(Color3.fromRGB(255,255,255),Color3.fromRGB(194,194,194)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			local ResetButton = Instance.new("TextButton")
+			ResetButton.Parent = ListFrame2
+			ResetButton.Size = UDim2.new(0.1,0,1,0)
+			ResetButton.Position = UDim2.new(0.115,0,0.5,0)
+			ResetButton.AnchorPoint = Vector2.new(0,0.5)
+			ResetButton.ZIndex = 13
+			ResetButton.Name = "ResetButton"
+			ResetButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+			ResetButton.Text = ""
+
+			local Icon = Instance.new("ImageLabel")
+			Icon.Parent = ResetButton
+			Icon.Image = "rbxassetid://1637592633"
+			Icon.BackgroundTransparency = 1
+			Icon.ScaleType = Enum.ScaleType.Fit
+			Icon.Size = UDim2.new(1,0,1,0)
+			Icon.ZIndex = 13
+			Icon.Position = UDim2.new(0.5,0,0.5,0)
+			Icon.AnchorPoint = Vector2.new(0.5,0.5)
+
+			NewCorner(ResetButton, UDim.new(0,8))
+			NewCorner(Icon,UDim.new(0,8))
+			NewGrad(ResetButton,ColorSequence.new(Color3.fromRGB(255,255,255),Color3.fromRGB(194,194,194)))
+
+			local OpenCloseButton = Instance.new("TextButton")
+			OpenCloseButton.Parent = ListFrame1
+			OpenCloseButton.Size = UDim2.new(0.1,0,1,0)
+			OpenCloseButton.Position = UDim2.new(0,0,0.5,0)
+			OpenCloseButton.AnchorPoint = Vector2.new(0,0.5)
+			OpenCloseButton.ZIndex = 14
+			OpenCloseButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+			OpenCloseButton.Text = ""
+			OpenCloseButton.Name = "OpenCloseButton"
+
+			local NewIcon = Instance.new("ImageLabel")
+			NewIcon.Parent = OpenCloseButton
+			NewIcon.Image = "http://www.roblox.com/asset/?id=395920720"
+			NewIcon.BackgroundTransparency = 1
+			NewIcon.ScaleType = Enum.ScaleType.Fit
+			NewIcon.ZIndex = 15
+			NewIcon.Position = UDim2.new(0.525,0,0.525,0)
+			NewIcon.AnchorPoint = Vector2.new(0.5,0.5)
+			NewIcon.Size = UDim2.new(0.9,0,0.9,0)
+
+
+			NewCorner(OpenCloseButton, UDim.new(0,8))
+			NewCorner(NewIcon,UDim.new(0,8))
+			NewGrad(OpenCloseButton,ColorSequence.new(Color3.fromRGB(255,255,255),Color3.fromRGB(194,194,194)))
+
+
+			local SearchOn = Instance.new("BoolValue")
+			SearchOn.Parent = ListFrame1
+			SearchOn.Name = "SearchOn"
+			SearchOn.Value = true
+			local ToUpdate = Instance.new("IntValue")
+			ToUpdate.Parent = ListFrame1
+			ToUpdate.Name = "ToUpdate"
+			ToUpdate.Value = 0
+			local SearchBoxObjVal = Instance.new("ObjectValue")
+			SearchBoxObjVal.Parent = ListFrame1
+			SearchBoxObjVal.Name = "SearchBoxObjVal"
+			SearchBoxObjVal.Value = SearchBox
+
+			ResetButton.MouseButton1Down:Connect(function()
+
+				SearchBox.Text = ""
+				
+				local c = TowersFrame.ListFrame.ScrollFrame:GetChildren()
+
+				for i = 1, #c do
+					if c[i]:IsA("TextButton") then
+						c[i].Visible = true
+						end
+
+				end
+			end)
+
+			SearchBox.FocusLost:Connect(function()
+
+				if SearchBox.Text == "" then
+					
+					local c1 = TowersFrame.ListFrame.ScrollFrame:GetChildren()
+
+					for i = 1, #c1 do
+						if c1[i]:IsA("TextButton") then
+							c1[i].Visible = true
+							end
+
+					end
+				else
+					
+					local c2 = TowersFrame.ListFrame.ScrollFrame:GetChildren()
+
+					for i = 1, #c2 do
+						if c2[i]:IsA("TextButton")then
+							c2[i].Visible = false
+							print(c2[i].Name)
+							if SearchBox.Text == "" or string.find(string.upper(c2[i].Name), string.upper(SearchBox.Text)) then
+								c2[i].Visible=true
+							end
+						end
+				end
+end
+			end)
+
+			local open = true
+			local debounce = false
+			OpenCloseButton.MouseButton1Down:Connect(function()
+				SearchOn.Value = not SearchOn.Value
+
+				if open == false then
+					if debounce == false then
+						debounce = true
+
+
+						ListFrame2:TweenSizeAndPosition(
+							UDim2.new(1,0,1,0), 
+							UDim2.new(0,0,0,0),-- Final position the tween should reach
+							Enum.EasingDirection.In, -- Direction of the easing
+							Enum.EasingStyle.Sine,   -- Kind of easing to apply
+							0.4,                       -- Duration of the tween in seconds
+							true                 -- Whether in-progress tweens are interrupted
+						)
+
+						--[[
+						game:GetService("TweenService"):Create(ListFrame2, { 0.4 }, {
+						Position = UDim2.new(0, 0, 0, 0), 
+						Size = UDim2.new(1,0,1,0)
+					}).Completed:wait();]]
+						open = true
+						debounce = false
+					end
+				elseif open == true then
+					if debounce == false then
+						debounce = true
+
+						ListFrame2:TweenSizeAndPosition(
+							UDim2.new(0,0,1,0), 
+							UDim2.new(0,0,0,0),-- Final position the tween should reach
+							Enum.EasingDirection.In, -- Direction of the easing
+							Enum.EasingStyle.Sine,   -- Kind of easing to apply
+							0.4,                       -- Duration of the tween in seconds
+							true                 -- Whether in-progress tweens are interrupted
+						)
+
+						open = false
+						debounce = false
+					end
+
+				end
+			end)
+		end
+		SearchFrame()
+
+
+
+
+
 		local function AddTower(TowerName)
 			if game.ReplicatedStorage.Units:FindFirstChild(TowerName) then
 				local ScrollFrame = TowersFrame:FindFirstChild("ListFrame"):FindFirstChild("ScrollFrame")
