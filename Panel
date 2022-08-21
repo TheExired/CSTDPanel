@@ -3,21 +3,73 @@ local PanelType = "Beta" --Alpha or beta
 local plr = game.Players.LocalPlayer
 local PlrGui = plr.PlayerGui
 local PlrData = plr:FindFirstChild("PlayerData")
+local LockedTowersList = {"Rat","Mage","Painter","Jon Robox"}
+
+--Tower Cycling
+
+if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower1.Value ~= "None" then
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 1})
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 1})
+	game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(1), game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower1.Value)
+end
+
+if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower2.Value ~= "None" then
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 2})
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 2})
+	game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(2), game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower2.Value)
+end
+
+if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower3.Value ~= "None" then
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 3})
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 3})
+	game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(3), game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower3.Value)
+end
+
+if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower4.Value ~= "None" then
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 4})
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 4})
+	game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(4), game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower4.Value)
+end
+
+if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower5.Value ~= "None" then
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 5})
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 5})
+	game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(5), game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower5.Value)
+end
+
+if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower6.Value ~= "None" then
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Equip", {Tower = "Bandit", Slot = 6})
+	game.ReplicatedStorage.Remotes.PlayerData:FireServer("Loadout","Unequip", {Tower = "Bandit", Slot = 6})
+	game.Players.LocalPlayer.PlayerGui.towerboothlol.Remote:FireServer(tostring(6), game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower6.Value)
+end
+
+
+
 
 
 game["Run Service"].RenderStepped:Connect(function()
-	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Colors.Visible = true
-	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Info.Visible = true
-	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Secrets.Visible = true
-	game:GetService("Players").CTDTestAccount.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.SecretsLOCKED.Visible = false
+	game:GetService("Players").LocalPlayer.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Colors.Visible = true
+	game:GetService("Players").LocalPlayer.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Info.Visible = true
+	game:GetService("Players").LocalPlayer.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.Secrets.Visible = true
+	game:GetService("Players").LocalPlayer.PlayerGui.Menu.OtherFrame.MenuFrame.Mainframe.SecretsLOCKED.Visible = false
+	local newa = game:GetService("Players").LocalPlayer.PlayerGui.Menu.OtherFrame.SecretsFrame.ListFrame.ScrollFrame:GetChildren()
+	for i = 1, #newa do
+		if newa[i]:IsA("ImageLabel") then
+			newa[i].ImageColor3 = Color3.fromRGB(255,255,255)
+			newa[i].ImageTransparency = 0
+			--local nc = game.Players.LocalPlayer.PlayerData:GetChildren()
+			--for i = 1, #nc do
+			--	if 
+			--end
+		end
+	end
 
-
-	local NewSelection = game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value].Levels["0"].Settings
+	local NewSelection = game.ReplicatedStorage.Units[game:GetService("Players").LocalPlayer.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value].Levels["0"].Settings
 	local LevelHidden = Instance.new("NumberValue")
 	LevelHidden = 0
 	local SearchingForHidden = true
 	local HiddenText = ""
-	local c = game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value].Levels:GetChildren()
+	local c = game.ReplicatedStorage.Units[game:GetService("Players").LocalPlayer.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value].Levels:GetChildren()
 	for i = 1, #c do
 		if c[i].Settings.CanHidden.Value == true then
 			if SearchingForHidden == true then
@@ -35,8 +87,8 @@ game["Run Service"].RenderStepped:Connect(function()
 	end
 	local PlaceLimit = 0
 	local PlaceLimitText = ""
-	if game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value]:FindFirstChild("PlaceLimit") then
-		PlaceLimit = game.ReplicatedStorage.Units[game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value]:FindFirstChild("PlaceLimit").Value or 0
+	if game.ReplicatedStorage.Units[game:GetService("Players").LocalPlayer.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value]:FindFirstChild("PlaceLimit") then
+		PlaceLimit = game.ReplicatedStorage.Units[game:GetService("Players").LocalPlayer.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background["Selected Tower"].Value]:FindFirstChild("PlaceLimit").Value or 0
 		if PlaceLimit ~= 0 then
 			PlaceLimitText = " | " .. "<font color=\"rgb(232, 0, 0)\"><br />Limit: "..PlaceLimit.."</font>"
 		else
@@ -44,7 +96,7 @@ game["Run Service"].RenderStepped:Connect(function()
 		end
 	end
 
-	game:GetService("Players").CTDTestAccount.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.Stats.TextLabel.Text = "<font color=\"rgb(255, 85, 0)\">".."Damage: "..NewSelection.Damage.Value.."</font>" .. " | " .. "<font color=\"rgb(15, 159, 255)\">".."Range: "..NewSelection.Range.Value.."</font>" .. "<font color=\"rgb(255, 170, 0)\"><br />".."AttackRate: "..NewSelection.ReloadTime.Value.."s</font>" .. HiddenText .. PlaceLimitText
+	game:GetService("Players").LocalPlayer.PlayerGui.CTDPlusMenu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.Stats.TextLabel.Text = "<font color=\"rgb(255, 85, 0)\">".."Damage: "..NewSelection.Damage.Value.."</font>" .. " | " .. "<font color=\"rgb(15, 159, 255)\">".."Range: "..NewSelection.Range.Value.."</font>" .. "<font color=\"rgb(255, 170, 0)\"><br />".."AttackRate: "..NewSelection.ReloadTime.Value.."s</font>" .. HiddenText .. PlaceLimitText
 
 end)
 
@@ -106,6 +158,7 @@ local function ButtonEffects(p)
 	p.MouseEnter:Connect(function()
 		if u3 == false then
 			u3 = true;
+			
 			p.Background.ImageColor3 = Color3.new(u1.R + 0.1568627450980392, u1.G + 0.1568627450980392, u1.B + 0.1568627450980392);
 			p.BackgroundDark.ImageColor3 = Color3.new(u2.R + 0.10980392156862745, u2.G + 0.10980392156862745, u2.B + 0.10980392156862745);
 			game:GetService("TweenService"):Create(p.Background, TweenInfo.new(0.75), {
@@ -114,6 +167,62 @@ local function ButtonEffects(p)
 			game:GetService("TweenService"):Create(p.BackgroundDark, TweenInfo.new(0.75), {
 				ImageColor3 = u2
 			}):Play();
+			
+
+				u3 = false
+			
+			--script.Parent.Power.TextTransparency = 0;
+			--script.Parent.Power.TextStrokeTransparency = 0.8;
+		
+		end
+	end)
+
+
+end
+
+
+
+local function TowerButtonEffects(p,e)
+	local a3 = false;
+	local u1 = Color3.fromRGB(90, 90, 90)
+	local u2 = Color3.fromRGB(67, 67, 67)
+	local u3 = Color3.fromRGB(72, 117, 64)
+	local u4 = Color3.fromRGB(47, 67, 48)
+	
+	
+	
+
+	p.MouseEnter:Connect(function()
+		if a3 == false then
+			
+			a3 = true;
+			
+			if e.Value == true then
+				p.Background.ImageColor3 = Color3.new(u3.R + 0.1568627450980392, u3.G + 0.1568627450980392, u3.B + 0.1568627450980392);
+				p.BackgroundDark.ImageColor3 = Color3.new(u4.R + 0.10980392156862745, u4.G + 0.10980392156862745, u4.B + 0.10980392156862745);
+				
+				game:GetService("TweenService"):Create(p.Background, TweenInfo.new(0.75), {
+					ImageColor3 = u3
+				}):Play();
+				game:GetService("TweenService"):Create(p.BackgroundDark, TweenInfo.new(0.75), {
+					ImageColor3 = u4
+				}):Play();	
+			else
+			p.Background.ImageColor3 = Color3.new(u1.R + 0.1568627450980392, u1.G + 0.1568627450980392, u1.B + 0.1568627450980392);
+				p.BackgroundDark.ImageColor3 = Color3.new(u2.R + 0.10980392156862745, u2.G + 0.10980392156862745, u2.B + 0.10980392156862745);
+				
+				game:GetService("TweenService"):Create(p.Background, TweenInfo.new(0.75), {
+					ImageColor3 = u1
+				}):Play();
+				game:GetService("TweenService"):Create(p.BackgroundDark, TweenInfo.new(0.75), {
+					ImageColor3 = u2
+				}):Play();	
+			end
+			
+
+
+			a3 = false
+
 			--script.Parent.Power.TextTransparency = 0;
 			--script.Parent.Power.TextStrokeTransparency = 0.8;
 
@@ -306,9 +415,11 @@ local function AdminPanelMain()
 	CreateButtonsButton("Crates",Buttons,"CRATES",UDim2.new(1,0,0,0),Color3.fromRGB(170, 85, 255),Color3.fromRGB(110, 54, 166),Color3.fromRGB(83, 40, 125))
 
 	Buttons.Crates.AnchorPoint = Vector2.new(1,0)
-	Buttons.Crates.Background.Icon.Image = "http://www.roblox.com/asset/?id=6522014622"
+	Buttons.Crates.Background.Icon.Image = "http://www.roblox.com/asset/?id=4572938248"
 	Buttons.Crates.Background.Icon.Size = UDim2.new(0.5,0,1.2,0)
 	Buttons.Crates.Background.Icon.Position = UDim2.new(0.25,0,-0.1,0)
+	Buttons.Crates.Background.Icon.ImageTransparency = 0.7
+	Buttons.Crates.Background.Icon.ScaleType = Enum.ScaleType.Crop
 
 	Buttons.Cosmetics.Background.Icon.Image = "http://www.roblox.com/asset/?id=6521979594"
 	Buttons.Cosmetics.Background.Icon.Size = UDim2.new(0.6,0,1.25,0)
@@ -1662,13 +1773,13 @@ local function AdminPanelMain()
 			ResetButton.MouseButton1Down:Connect(function()
 
 				SearchBox.Text = ""
-				
+
 				local c = TowersFrame.ListFrame.ScrollFrame:GetChildren()
 
 				for i = 1, #c do
 					if c[i]:IsA("TextButton") then
 						c[i].Visible = true
-						end
+					end
 
 				end
 			end)
@@ -1676,29 +1787,28 @@ local function AdminPanelMain()
 			SearchBox.FocusLost:Connect(function()
 
 				if SearchBox.Text == "" then
-					
+
 					local c1 = TowersFrame.ListFrame.ScrollFrame:GetChildren()
 
 					for i = 1, #c1 do
 						if c1[i]:IsA("TextButton") then
 							c1[i].Visible = true
-							end
+						end
 
 					end
 				else
-					
+
 					local c2 = TowersFrame.ListFrame.ScrollFrame:GetChildren()
 
 					for i = 1, #c2 do
 						if c2[i]:IsA("TextButton")then
 							c2[i].Visible = false
-							print(c2[i].Name)
 							if SearchBox.Text == "" or string.find(string.upper(c2[i].Name), string.upper(SearchBox.Text)) then
 								c2[i].Visible=true
 							end
 						end
+					end
 				end
-end
 			end)
 
 			local open = true
@@ -1777,6 +1887,8 @@ end
 				Bg1.Position = UDim2.new(0,0,0,0)
 				Bg1.Size = UDim2.new(1,0,0.95,0)
 				Bg1.ZIndex = 2
+				
+				
 
 				local Bg2 = Instance.new("ImageLabel")
 				Bg2.Name = "BackgroundDark"
@@ -1851,7 +1963,50 @@ end
 				local TowerView = game.Players.LocalPlayer.PlayerGui.Menu.EquipmentFrame.Mainframe.TowersFrame.ListFrame.ScrollFrame:FindFirstChild(TowerName).Icon:Clone()
 				TowerView.Parent = Button
 				AddSoundsToButton(Button,1,1)
-				ButtonEffects(Button)
+				--ButtonEffects(Button)
+				TowerButtonEffects(Button,Equipped)
+				
+				if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower1.Value == TowerName then
+					Equipped.Value = true
+					Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+					Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+					
+					
+					Slot.Value = 1
+					EquippedSlot.Text = Slot.Value
+				elseif game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower2.Value == TowerName then
+					Equipped.Value = true
+					Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+					Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+					Slot.Value = 2
+					EquippedSlot.Text = Slot.Value
+					elseif game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower3.Value == TowerName then
+						Equipped.Value = true
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+						Slot.Value = 3
+					EquippedSlot.Text = Slot.Value
+				elseif game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower4.Value == TowerName then
+					Equipped.Value = true
+					Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+					Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+					Slot.Value = 4
+					EquippedSlot.Text = Slot.Value
+					
+				elseif game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower5.Value == TowerName then
+					Equipped.Value = true
+					Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+					Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+					Slot.Value = 5
+					EquippedSlot.Text = Slot.Value
+					
+				elseif game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower6.Value == TowerName then
+					Equipped.Value = true
+					Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+					Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+					Slot.Value = 6
+					EquippedSlot.Text = Slot.Value
+				end
 
 				Button.MouseButton1Down:Connect(function()
 					local Background = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background
@@ -1859,6 +2014,11 @@ end
 					SelectedTower.Value = TowerName
 					local Unequip = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.Unequip
 					local Equip = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.Equip
+					if table.find(LockedTowersList,SelectedTower.Value) then
+						Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.ViewportFrame.ImageColor3 = Color3.fromRGB(0,0,0)
+					else
+						Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background.ViewportFrame.ImageColor3 = Color3.fromRGB(255,255,255)
+					end
 					if Equipped.Value == false then
 						Unequip.Visible = false
 						Equip.Visible = true
@@ -1935,14 +2095,14 @@ end
 end
 AdminPanelMain()
 
-local LockedTowersList = {"Rat","Mage","Painter"}
+
 local Children = Menu.AdminPanelFrame.Mainframe.TowersFrame.ListFrame.ScrollFrame:GetChildren()
 for i = 1, #Children do
 	if table.find(LockedTowersList,Children[i].Name) then
 		Children[i].Background.ImageColor3 = Color3.fromRGB(70, 70, 70)
 		Children[i].BackgroundDark.ImageColor3 = Color3.fromRGB(67, 67, 67)
 		Children[i].TextLabel.Text = "???"
-		--Children[i].Icon.ImageColor3 = Color3.new(0,0,0)
+		Children[i].Icon.ImageColor3 = Color3.new(0,0,0)
 	end
 end
 
