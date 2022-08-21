@@ -1966,6 +1966,7 @@ local function AdminPanelMain()
 				--ButtonEffects(Button)
 				TowerButtonEffects(Button,Equipped)
 				
+				
 				if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower1.Value == TowerName then
 					Equipped.Value = true
 					Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
@@ -2007,6 +2008,72 @@ local function AdminPanelMain()
 					Slot.Value = 6
 					EquippedSlot.Text = Slot.Value
 				end
+				
+				game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower1.Value.Changed:Connect(function()
+					if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower1.Value == TowerName then
+						Equipped.Value = true
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+
+
+						Slot.Value = 1
+						EquippedSlot.Text = Slot.Value
+						end
+				end)
+				
+				game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower2.Value.Changed:Connect(function()
+					if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower2.Value == TowerName then
+						Equipped.Value = true
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+						Slot.Value = 2
+						EquippedSlot.Text = Slot.Value
+						end
+				end)
+				
+				game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower3.Value.Changed:Connect(function()
+					if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower3.Value == TowerName then
+						Equipped.Value = true
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+						Slot.Value = 3
+						EquippedSlot.Text = Slot.Value
+						end
+				end)
+				
+				game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower4.Value.Changed:Connect(function()
+					if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower4.Value == TowerName then
+						Equipped.Value = true
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+						Slot.Value = 4
+						EquippedSlot.Text = Slot.Value
+						end
+				end)
+				
+				game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower5.Value.Changed:Connect(function()
+					if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower5.Value == TowerName then
+						Equipped.Value = true
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+						Slot.Value = 5
+						EquippedSlot.Text = Slot.Value
+						end
+				end)
+				
+				game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower6.Value.Changed:Connect(function()
+					if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower6.Value == TowerName then
+						Equipped.Value = true
+						Bg1.ImageColor3 = Color3.fromRGB(72, 117, 64)
+						Bg2.ImageColor3 = Color3.fromRGB(47, 67, 48)
+						Slot.Value = 6
+						EquippedSlot.Text = Slot.Value
+						end
+				end)
+
+
+
+
 
 				Button.MouseButton1Down:Connect(function()
 					local Background = Menu.AdminPanelFrame.Mainframe.TowersFrame.InfoFrame.Background
