@@ -4,6 +4,8 @@ local plr = game.Players.LocalPlayer
 local PlrGui = plr.PlayerGui
 local PlrData = plr:FindFirstChild("PlayerData")
 local LockedTowersList = {"Rat","Mage","Painter","Jon Robox"}
+local CTDModule = require(game.ReplicatedStorage.Modules.CTDModule)
+
 
 --Tower Cycling
 
@@ -400,7 +402,7 @@ local function AdminPanelMain()
 			for i = 1, #chi do
 				if chi[i]:IsA("Frame") then
 					chi[i].Visible = false
-
+					CTDModule.dosoundasset(game.Players.LocalPlayer, "ClickSoundNormal")
 				end
 			end
 
@@ -2466,7 +2468,7 @@ AdminButton.MouseButton1Down:Connect(function()
 		game.Players.LocalPlayer.PlayerGui.Menu.ShopFrame.Visible = false
 		game.Players.LocalPlayer.PlayerGui.Menu.BountiesFrame.Visible = false
 		game.Players.LocalPlayer.PlayerGui.Menu.OtherFrame.Visible = false
-
+		CTDModule.dosoundasset(game.Players.LocalPlayer, "ClickSoundNormal")
 
 		Menu.AdminPanelFrame.Position = oldpos + UDim2.new(0, 0, 0.05, 0);
 		game:GetService("TweenService"):Create(Menu.AdminPanelFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
