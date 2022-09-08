@@ -7,6 +7,75 @@ local LockedTowersList = {"Rat","Mage","Painter","Jon Robox"}
 local CTDModule = require(game.ReplicatedStorage.Modules.CTDModule)
 
 
+local NewMenu = plr.PlayerGui.Menu.OtherFrame.ColorsFrame.Mainframe
+
+local RainbowTowersEnabled = Instance.new("BoolValue")
+RainbowTowersEnabled.Value = false
+RainbowTowersEnabled.Parent = plr
+local OldColorsPrimary = nil
+local OldColorsSecondary = nil
+local OldColorsWeapon = nil
+
+local RainbowTowersF = NewMenu.TowerColors:Clone()
+RainbowTowersF.Parent = NewMenu
+RainbowTowersF.TextLabel.Text = "Rainbow Towers"
+RainbowTowersF.Position = UDim2.new(0.45,0,0.01,0)
+RainbowTowersF.Name = "RainbowTowers"
+RainbowTowersF.BoolFrame.Check.Visible = false
+RainbowTowersF.BoolFrame.X.Visible = true
+
+RainbowTowersF.BoolFrame.X.MouseButton1Down:Connect(function()
+	RainbowTowersF.BoolFrame.Check.Visible = true
+	--OldColorsPrimary = Color3:ToHSV(tonumber(NewMenu.Colors.PrimaryColor.R.Text),tonumber(NewMenu.Colors.PrimaryColor.G.Text),tonumber(NewMenu.Colors.PrimaryColor.B.Text))
+	--OldColorsSecondary = Color3:ToHSV(tonumber(Menu.Colors.SecondaryColor.R.Text),tonumber(Menu.Colors.SecondaryColor.G.Text),tonumber(Menu.Colors.SecondaryColor.B.Text))
+	--OldColorsWeapon = Color3:ToHSV(tonumber(Menu.Colors.WeaponColor.R.Text),tonumber(Menu.Colors.WeaponColor.G.Text),tonumber(Menu.Colors.WeaponColor.B.Text))
+	RainbowTowersEnabled.Value = true
+	RainbowTowersF.BoolFrame.X.Visible = false
+	
+	
+	
+end)
+RainbowTowersF.BoolFrame.Check.MouseButton1Down:Connect(function()
+	RainbowTowersF.BoolFrame.X.Visible = true
+	RainbowTowersEnabled.Value = false
+
+	--game.ReplicatedStorage.Remotes.PlayerData:FireServer("Color","PrimaryColor",{Color = OldColorsPrimary})
+	RainbowTowersF.BoolFrame.Check.Visible = false
+	
+	
+	--game.ReplicatedStorage.Remotes.PlayerData:FireServer("Color","SecondaryColor",{Color = OldColorsSecondary})
+	--game.ReplicatedStorage.Remotes.PlayerData:FireServer("Color","WeaponColor",{Color = OldColorsWeapon})
+end)
+
+local function RainbowTowers()
+	
+	local speed = 0.05 
+
+
+	-- Main script below here
+	local function zz(X)
+		return math.acos(math.cos(X*math.pi))/math.pi 
+	end
+
+	count = 0
+	task.spawn(function()
+	while task.wait(speed)do
+		if RainbowTowersEnabled.Value == true then
+			game.ReplicatedStorage.Remotes.PlayerData:FireServer("Color","PrimaryColor",{Color = Color3.fromHSV(zz(count),1,1)})
+				game.ReplicatedStorage.Remotes.PlayerData:FireServer("Color","SecondaryColor",{Color = Color3.fromHSV(zz(count),1,1)})
+				game.ReplicatedStorage.Remotes.PlayerData:FireServer("Color","WeaponColor",{Color = Color3.fromHSV(zz(count),1,1)})
+			count = count + 0.01
+			
+		end
+		
+		
+		end
+		end)
+end
+
+RainbowTowers()
+
+
 --Tower Cycling
 
 if game:GetService("Players").LocalPlayer.PlayerData.Loadout.Tower1.Value ~= "None" then
